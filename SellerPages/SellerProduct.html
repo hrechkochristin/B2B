@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<!-- Header Bar -->
+<header class="top-header">
+    <div class="header-left">
+        <h1 class="page-title">Seller Dashboard</h1>
+    </div>
+    <div class="header-right">
+        <div class="user-info">
+            <div class="user-avatar">
+                <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
+            </div>
+            <span class="user-name">Продавець</span>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="SellerNewOffers.html">Нові пропозиції</a></li>
+            <li class="active"><a href="SellerProduct.html">Мої товари</a></li>
+            <li><a href="SellerOrder.html">Замовлення</a></li>
+            <li><a href="SellerBuyers.html">Покупці</a></li>
+            <li><a href="SellerCarriers.html">Перевізники</a></li>
+            <li><a href="SellerStorage.html">Склади</a></li>
+        </ul>
+    </aside>
+
+    <main class="main_page">
+        <div class="page-header">
+            <h1>Керування товарами</h1>
+            <p>Додавайте, редагуйте та керуйте своїм каталогом продукції</p>
+            <button class="btn-add-product">+ Додати товар</button>
+        </div>
+
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/200x150/38bdf8/ffffff?text=Ноутбук" alt="Product Image">
+                    <div class="product-status in-stock">В наявності</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Ноутбук Lenovo ThinkPad X1</h3>
+                    <p class="product-category">Електроніка</p>
+                    <div class="product-details">
+                        <span class="product-price">₴45,000</span>
+                        <span class="product-stock">12 шт</span>
+                    </div>
+                    <div class="product-description">
+                        Професійний ноутбук для бізнесу з високою продуктивністю
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-edit">Редагувати</button>
+                    <button class="btn-delete">Видалити</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/200x150/06b6d4/ffffff?text=Монітор" alt="Product Image">
+                    <div class="product-status low-stock">Мало</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Монітор Dell 27"</h3>
+                    <p class="product-category">Електроніка</p>
+                    <div class="product-details">
+                        <span class="product-price">₴12,500</span>
+                        <span class="product-stock">3 шт</span>
+                    </div>
+                    <div class="product-description">
+                        4K монітор з відмінною якістю зображення
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-edit">Редагувати</button>
+                    <button class="btn-delete">Видалити</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/200x150/8b5cf6/ffffff?text=Клавіатура" alt="Product Image">
+                    <div class="product-status out-of-stock">Немає</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Механічна клавіатура Keychron</h3>
+                    <p class="product-category">Аксесуари</p>
+                    <div class="product-details">
+                        <span class="product-price">₴3,200</span>
+                        <span class="product-stock">0 шт</span>
+                    </div>
+                    <div class="product-description">
+                        Бездротова механічна клавіатура з підсвіткою
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-edit">Редагувати</button>
+                    <button class="btn-delete">Видалити</button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/200x150/f59e0b/ffffff?text=Миша" alt="Product Image">
+                    <div class="product-status in-stock">В наявності</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Бездротова миша Logitech MX Master</h3>
+                    <p class="product-category">Аксесуари</p>
+                    <div class="product-details">
+                        <span class="product-price">₴2,800</span>
+                        <span class="product-stock">8 шт</span>
+                    </div>
+                    <div class="product-description">
+                        Ергономічна миша для професіоналів
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-edit">Редагувати</button>
+                    <button class="btn-delete">Видалити</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

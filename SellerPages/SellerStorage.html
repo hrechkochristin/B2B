@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<!-- Header Bar -->
+<header class="top-header">
+    <div class="header-left">
+        <h1 class="page-title">Seller Dashboard</h1>
+    </div>
+    <div class="header-right">
+        <div class="user-info">
+            <div class="user-avatar">
+                <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
+            </div>
+            <span class="user-name">Продавець</span>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="SellerNewOffers.html">Нові пропозиції</a></li>
+            <li><a href="SellerProduct.html">Мої товари</a></li>
+            <li><a href="SellerOrder.html">Замовлення</a></li>
+            <li><a href="SellerBuyers.html">Покупці</a></li>
+            <li><a href="SellerCarriers.html">Перевізники</a></li>
+            <li class="active"><a href="SellerStorage.html">Склади</a></li>
+        </ul>
+    </aside>
+
+    <main class="main_page">
+        <div class="page-header">
+            <h1>Керування складами</h1>
+            <p>Контролюйте запаси та розташування товарів</p>
+            <button class="btn-add-storage">+ Додати склад</button>
+        </div>
+
+        <div class="storage-overview">
+            <div class="overview-card">
+                <h3>Загальна статистика</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Склади</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1,247</span>
+                        <span class="stat-label">Товарів</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">85%</span>
+                        <span class="stat-label">Заповнення</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Категорій</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warehouses-grid">
+            <!-- Warehouse 1 -->
+            <div class="warehouse-card">
+                <div class="warehouse-header">
+                    <div class="warehouse-icon">
+                        <img src="https://via.placeholder.com/60x60/38bdf8/ffffff?text=СК1" alt="Warehouse">
+                    </div>
+                    <div class="warehouse-status">
+                        <span class="status-indicator active"></span>
+                        <span class="status-text">Активний</span>
+                    </div>
+                </div>
+                <div class="warehouse-info">
+                    <h3 class="warehouse-name">Центральний склад</h3>
+                    <p class="warehouse-address">вул. Хрещатик, 25, Київ</p>
+                    <div class="warehouse-details">
+                        <span class="warehouse-capacity">500 м²</span>
+                        <span class="warehouse-utilization">92% заповнення</span>
+                    </div>
+                    <div class="warehouse-features">
+                        <span class="feature-tag">Охорона</span>
+                        <span class="feature-tag">Кондиціонер</span>
+                        <span class="feature-tag">24/7</span>
+                    </div>
+                </div>
+                <div class="warehouse-inventory">
+                    <h4>Основні товари:</h4>
+                    <div class="inventory-items">
+                        <div class="inventory-item">
+                            <span class="item-name">Ноутбуки</span>
+                            <span class="item-count">45 шт</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-name">Монітори</span>
+                            <span class="item-count">28 шт</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-name">Аксесуари</span>
+                            <span class="item-count">156 шт</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="warehouse-actions">
+                    <button class="btn-primary">Переглянути</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+
+            <!-- Warehouse 2 -->
+            <div class="warehouse-card">
+                <div class="warehouse-header">
+                    <div class="warehouse-icon">
+                        <img src="https://via.placeholder.com/60x60/06b6d4/ffffff?text=СК2" alt="Warehouse">
+                    </div>
+                    <div class="warehouse-status">
+                        <span class="status-indicator active"></span>
+                        <span class="status-text">Активний</span>
+                    </div>
+                </div>
+                <div class="warehouse-info">
+                    <h3 class="warehouse-name">Регіональний склад</h3>
+                    <p class="warehouse-address">вул. Промислова, 12, Львів</p>
+                    <div class="warehouse-details">
+                        <span class="warehouse-capacity">300 м²</span>
+                        <span class="warehouse-utilization">78% заповнення</span>
+                    </div>
+                    <div class="warehouse-features">
+                        <span class="feature-tag">Охорона</span>
+                        <span class="feature-tag">Вантажний підйомник</span>
+                    </div>
+                </div>
+                <div class="warehouse-inventory">
+                    <h4>Основні товари:</h4>
+                    <div class="inventory-items">
+                        <div class="inventory-item">
+                            <span class="item-name">Периферія</span>
+                            <span class="item-count">89 шт</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-name">Кабелі</span>
+                            <span class="item-count">234 шт</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-name">Комплектуючі</span>
+                            <span class="item-count">145 шт</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="warehouse-actions">
+                    <button class="btn-primary">Переглянути</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+
+            <!-- Warehouse 3 -->
+            <div class="warehouse-card">
+                <div class="warehouse-header">
+                    <div class="warehouse-icon">
+                        <img src="https://via.placeholder.com/60x60/8b5cf6/ffffff?text=СК3" alt="Warehouse">
+                    </div>
+                    <div class="warehouse-status">
+                        <span class="status-indicator maintenance"></span>
+                        <span class="status-text">Техобслуговування</span>
+                    </div>
+                </div>
+                <div class="warehouse-info">
+                    <h3 class="warehouse-name">Малий склад</h3>
+                    <p class="warehouse-address">вул. Логістична, 5, Одеса</p>
+                    <div class="warehouse-details">
+                        <span class="warehouse-capacity">150 м²</span>
+                        <span class="warehouse-utilization">45% заповнення</span>
+                    </div>
+                    <div class="warehouse-features">
+                        <span class="feature-tag">Охорона</span>
+                        <span class="feature-tag">Мінімальний</span>
+                    </div>
+                </div>
+                <div class="warehouse-inventory">
+                    <h4>Основні товари:</h4>
+                    <div class="inventory-items">
+                        <div class="inventory-item">
+                            <span class="item-name">Дрібна техніка</span>
+                            <span class="item-count">67 шт</span>
+                        </div>
+                        <div class="inventory-item">
+                            <span class="item-name">Аксесуари</span>
+                            <span class="item-count">123 шт</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="warehouse-actions">
+                    <button class="btn-primary">Переглянути</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
