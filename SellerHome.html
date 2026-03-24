@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Seller Dashboard</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- Header Bar -->
 <header class="top-header">
     <div class="header-left">
+        <button class="burger-menu" id="burger-toggle">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+        </button>
         <h1 class="page-title">Seller Dashboard</h1>
     </div>
     <div class="header-right">
@@ -24,22 +29,23 @@
 
 <div class="container">
 
-    <aside class="sidebar sidebar-always-visible" id="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h2>SELLER</h2>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="SellerProduct.html">Каталог товарів</a></li>
-            <li><a href="SellerOrder.html">Замовлення</a></li>
-            <li><a href="SellerOrdersInProces.html">Нові пропозиції</a></li>
-            <li><a href="SellerStorage.html">Склади</a></li>
-            <li><a href="SellerCarriers.html">Перевізники</a></li>
-            <li><a href="SellerBuyers.html">Покупці</a></li>
+            <li><a href="SellerPages/SellerProduct.html">Каталог товарів</a></li>
+            <li><a href="SellerPages/SellerOrder.html">Замовлення</a></li>
+            <li><a href="SellerPages/SellerOrdersInProces.html">Нові пропозиції</a></li>
+            <li><a href="SellerPages/SellerStorage.html">Склади</a></li>
+            <li><a href="SellerPages/SellerCarriers.html">Перевізники</a></li>
+            <li><a href="SellerPages/SellerBuyers.html">Покупці</a></li>
             <li><a href="#chats">Чати</a></li>
         </ul>
     </aside>
 
-    <main class="main_page">
+    <main class="main">
+
         <div class="cards">
             <a href="SellerPages/SellerProduct.html" class="card-btn">
                 <span class="btn-main">Каталог продукції</span>
@@ -79,6 +85,26 @@
         </div>
     </main>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const burgerToggle = document.getElementById('burger-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    burgerToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('sidebar-open');
+        burgerToggle.classList.toggle('burger-active');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!sidebar.contains(event.target) && !burgerToggle.contains(event.target)) {
+            sidebar.classList.remove('sidebar-open');
+            burgerToggle.classList.remove('burger-active');
+        }
+    });
+});
+</script>
 
 </body>
 </html>
