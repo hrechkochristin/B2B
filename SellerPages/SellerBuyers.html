@@ -26,59 +26,146 @@
 
     <aside class="sidebar sidebar-always-visible" id="sidebar">
         <div class="sidebar-header">
-            <h2>SELLER</h2>
+            <h2>Menu</h2>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="SellerProduct.html">Каталог товарів</a></li>
+            <li><a href="SellerNewOffers.html">Нові пропозиції</a></li>
+            <li><a href="SellerProduct.html">Мої товари</a></li>
             <li><a href="SellerOrder.html">Замовлення</a></li>
-            <li><a href="SellerOrdersInProces.html">Нові пропозиції</a></li>
-            <li><a href="SellerStorage.html">Склади</a></li>
+            <li class="active"><a href="SellerBuyers.html">Покупці</a></li>
             <li><a href="SellerCarriers.html">Перевізники</a></li>
-            <li><a href="SellerBuyers.html">Покупці</a></li>
-            <li><a href="#chats">Чати</a></li>
+            <li><a href="SellerStorage.html">Склади</a></li>
         </ul>
     </aside>
 
     <main class="main_page">
-        <div class="cards">
-            <a href="SellerPages/SellerProduct.html" class="card-btn">
-                <span class="btn-main">Каталог продукції</span>
-                <p class="btn-desc">Керування товарами</p>
-            </a>
+        <div class="page-header">
+            <h1>База покупців</h1>
+            <p>Керуйте своїми клієнтами та їхніми замовленнями</p>
+        </div>
 
-            <a href="SellerPages/SellerOrder.html" class="card-btn">
-                <span class="btn-main">Замовлення</span>
-                <p class="btn-desc">Перегляд та управління</p>
-            </a>
+        <div class="buyers-grid">
+            <!-- Buyer 1 -->
+            <div class="buyer-card">
+                <div class="buyer-avatar">
+                    <img src="https://via.placeholder.com/80x80/38bdf8/ffffff?text=AB" alt="Buyer Avatar">
+                    <div class="buyer-status online"></div>
+                </div>
+                <div class="buyer-info">
+                    <h3 class="buyer-name">Андрій Бондаренко</h3>
+                    <p class="buyer-company">ТОВ "ТехноСервіс"</p>
+                    <div class="buyer-details">
+                        <span class="buyer-orders">12 замовлень</span>
+                        <span class="buyer-rating">⭐ 4.8</span>
+                    </div>
+                    <div class="buyer-contact">
+                        <span class="buyer-phone">+380 50 123 45 67</span>
+                        <span class="buyer-email">andriy@technoservice.ua</span>
+                    </div>
+                </div>
+                <div class="buyer-actions">
+                    <button class="btn-primary">Переглянути профіль</button>
+                    <button class="btn-secondary">Написати</button>
+                </div>
+            </div>
 
-            <a href="SellerPages/SellerOrdersInProces.html" class="card-btn">
-                <span class="btn-main">В процесі</span>
-                <p class="btn-desc">Підтвердження замовлень</p>
-            </a>
+            <!-- Buyer 2 -->
+            <div class="buyer-card">
+                <div class="buyer-avatar">
+                    <img src="https://via.placeholder.com/80x80/06b6d4/ffffff?text=МП" alt="Buyer Avatar">
+                    <div class="buyer-status offline"></div>
+                </div>
+                <div class="buyer-info">
+                    <h3 class="buyer-name">Марія Петренко</h3>
+                    <p class="buyer-company">ПП "ЕкоТрейд"</p>
+                    <div class="buyer-details">
+                        <span class="buyer-orders">8 замовлень</span>
+                        <span class="buyer-rating">⭐ 4.6</span>
+                    </div>
+                    <div class="buyer-contact">
+                        <span class="buyer-phone">+380 67 987 65 43</span>
+                        <span class="buyer-email">maria@ekotrade.ua</span>
+                    </div>
+                </div>
+                <div class="buyer-actions">
+                    <button class="btn-primary">Переглянути профіль</button>
+                    <button class="btn-secondary">Написати</button>
+                </div>
+            </div>
 
-            <a href="#map" class="card-btn">
-                <span class="btn-main">Мапа</span>
-                <p class="btn-desc">Локації та маршрути</p>
-            </a>
+            <!-- Buyer 3 -->
+            <div class="buyer-card">
+                <div class="buyer-avatar">
+                    <img src="https://via.placeholder.com/80x80/8b5cf6/ffffff?text=СК" alt="Buyer Avatar">
+                    <div class="buyer-status online"></div>
+                </div>
+                <div class="buyer-info">
+                    <h3 class="buyer-name">Сергій Коваленко</h3>
+                    <p class="buyer-company">ФОП Коваленко С.В.</p>
+                    <div class="buyer-details">
+                        <span class="buyer-orders">15 замовлень</span>
+                        <span class="buyer-rating">⭐ 4.9</span>
+                    </div>
+                    <div class="buyer-contact">
+                        <span class="buyer-phone">+380 93 456 78 90</span>
+                        <span class="buyer-email">sergiy.kovalenko@gmail.com</span>
+                    </div>
+                </div>
+                <div class="buyer-actions">
+                    <button class="btn-primary">Переглянути профіль</button>
+                    <button class="btn-secondary">Написати</button>
+                </div>
+            </div>
 
-            <a href="SellerPages/SellerStorage.html" class="card-btn">
-                <span class="btn-main">Склади</span>
-                <p class="btn-desc">Налаштування сховищ</p>
-            </a>
+            <!-- Buyer 4 -->
+            <div class="buyer-card">
+                <div class="buyer-avatar">
+                    <img src="https://via.placeholder.com/80x80/f59e0b/ffffff?text=ОМ" alt="Buyer Avatar">
+                    <div class="buyer-status away"></div>
+                </div>
+                <div class="buyer-info">
+                    <h3 class="buyer-name">Олена Мельник</h3>
+                    <p class="buyer-company">ТОВ "БудМатеріали"</p>
+                    <div class="buyer-details">
+                        <span class="buyer-orders">6 замовлень</span>
+                        <span class="buyer-rating">⭐ 4.7</span>
+                    </div>
+                    <div class="buyer-contact">
+                        <span class="buyer-phone">+380 99 321 65 87</span>
+                        <span class="buyer-email">olena@budmaterialy.ua</span>
+                    </div>
+                </div>
+                <div class="buyer-actions">
+                    <button class="btn-primary">Переглянути профіль</button>
+                    <button class="btn-secondary">Написати</button>
+                </div>
+            </div>
 
-            <a href="SellerPages/SellerCarriers.html" class="card-btn">
-                <span class="btn-main">Перевізники</span>
-                <p class="btn-desc">Список та угоди</p>
-            </a>
-
-            <a href="SellerPages/SellerBuyers.html" class="card-btn">
-                <span class="btn-main">Покупці</span>
-                <p class="btn-desc">База клієнтів</p>
-            </a>
-
+            <!-- Template for additional buyers -->
+            <!--
+            <div class="buyer-card">
+                <div class="buyer-avatar">
+                    <img src="https://via.placeholder.com/80x80/COLOR/ffffff?text=XX" alt="Buyer Avatar">
+                    <div class="buyer-status online"></div>
+                </div>
+                <div class="buyer-info">
+                    <h3 class="buyer-name">Ім'я Прізвище</h3>
+                    <p class="buyer-company">Назва компанії</p>
+                    <div class="buyer-details">
+                        <span class="buyer-orders">X замовлень</span>
+                        <span class="buyer-rating">⭐ X.X</span>
+                    </div>
+                    <div class="buyer-contact">
+                        <span class="buyer-phone">+380 XX XXX XX XX</span>
+                        <span class="buyer-email">email@example.com</span>
+                    </div>
+                </div>
+                <div class="buyer-actions">
+                    <button class="btn-primary">Переглянути профіль</button>
+                    <button class="btn-secondary">Написати</button>
+                </div>
+            </div>
+            -->
         </div>
     </main>
 </div>
-
-</body>
-</html>

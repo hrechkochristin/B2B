@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<!-- Header Bar -->
+<header class="top-header">
+    <div class="header-left">
+        <h1 class="page-title">Seller Dashboard</h1>
+    </div>
+    <div class="header-right">
+        <div class="user-info">
+            <div class="user-avatar">
+                <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
+            </div>
+            <span class="user-name">Продавець</span>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="SellerNewOffers.html">Нові пропозиції</a></li>
+            <li><a href="SellerProduct.html">Мої товари</a></li>
+            <li><a href="SellerOrder.html">Замовлення</a></li>
+            <li><a href="SellerBuyers.html">Покупці</a></li>
+            <li class="active"><a href="SellerCarriers.html">Перевізники</a></li>
+            <li><a href="SellerStorage.html">Склади</a></li>
+        </ul>
+    </aside>
+
+    <main class="main_page">
+        <div class="page-header">
+            <h1>База перевізників</h1>
+            <p>Керуйте партнерами з доставки та логістики</p>
+            <button class="btn-add-carrier">+ Додати перевізника</button>
+        </div>
+
+        <div class="carriers-grid">
+            <!-- Carrier 1 -->
+            <div class="carrier-card">
+                <div class="carrier-header">
+                    <div class="carrier-logo">
+                        <img src="https://via.placeholder.com/60x60/38bdf8/ffffff?text=НП" alt="Carrier Logo">
+                    </div>
+                    <div class="carrier-status">
+                        <span class="status-badge active">Активний</span>
+                    </div>
+                </div>
+                <div class="carrier-info">
+                    <h3 class="carrier-name">Нова Пошта</h3>
+                    <p class="carrier-type">Кур'єрська служба</p>
+                    <div class="carrier-details">
+                        <span class="carrier-rating">⭐ 4.7</span>
+                        <span class="carrier-deliveries">1,250 доставок</span>
+                    </div>
+                    <div class="carrier-services">
+                        <span class="service-tag">Експрес</span>
+                        <span class="service-tag">Стандарт</span>
+                        <span class="service-tag">До відділення</span>
+                    </div>
+                </div>
+                <div class="carrier-contact">
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <span class="contact-value">0 800 500 609</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">info@novaposhta.ua</span>
+                    </div>
+                </div>
+                <div class="carrier-actions">
+                    <button class="btn-primary">Замовити доставку</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+
+            <!-- Carrier 2 -->
+            <div class="carrier-card">
+                <div class="carrier-header">
+                    <div class="carrier-logo">
+                        <img src="https://via.placeholder.com/60x60/06b6d4/ffffff?text=УП" alt="Carrier Logo">
+                    </div>
+                    <div class="carrier-status">
+                        <span class="status-badge active">Активний</span>
+                    </div>
+                </div>
+                <div class="carrier-info">
+                    <h3 class="carrier-name">Укрпошта</h3>
+                    <p class="carrier-type">Державна пошта</p>
+                    <div class="carrier-details">
+                        <span class="carrier-rating">⭐ 4.2</span>
+                        <span class="carrier-deliveries">890 доставок</span>
+                    </div>
+                    <div class="carrier-services">
+                        <span class="service-tag">Стандарт</span>
+                        <span class="service-tag">Економ</span>
+                        <span class="service-tag">Міжнародна</span>
+                    </div>
+                </div>
+                <div class="carrier-contact">
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <span class="contact-value">0 800 300 545</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">info@ukrposhta.ua</span>
+                    </div>
+                </div>
+                <div class="carrier-actions">
+                    <button class="btn-primary">Замовити доставку</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+
+            <!-- Carrier 3 -->
+            <div class="carrier-card">
+                <div class="carrier-header">
+                    <div class="carrier-logo">
+                        <img src="https://via.placeholder.com/60x60/8b5cf6/ffffff?text=ДЛ" alt="Carrier Logo">
+                    </div>
+                    <div class="carrier-status">
+                        <span class="status-badge inactive">Неактивний</span>
+                    </div>
+                </div>
+                <div class="carrier-info">
+                    <h3 class="carrier-name">Делівері Логістик</h3>
+                    <p class="carrier-type">Приватна логістика</p>
+                    <div class="carrier-details">
+                        <span class="carrier-rating">⭐ 4.5</span>
+                        <span class="carrier-deliveries">456 доставок</span>
+                    </div>
+                    <div class="carrier-services">
+                        <span class="service-tag">Експрес</span>
+                        <span class="service-tag">Вантажі</span>
+                        <span class="service-tag">Рефрижератор</span>
+                    </div>
+                </div>
+                <div class="carrier-contact">
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <span class="contact-value">+380 44 123 45 67</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">info@delivery-logistic.ua</span>
+                    </div>
+                </div>
+                <div class="carrier-actions">
+                    <button class="btn-primary">Замовити доставку</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+
+            <!-- Carrier 4 -->
+            <div class="carrier-card">
+                <div class="carrier-header">
+                    <div class="carrier-logo">
+                        <img src="https://via.placeholder.com/60x60/f59e0b/ffffff?text=МТ" alt="Carrier Logo">
+                    </div>
+                    <div class="carrier-status">
+                        <span class="status-badge active">Активний</span>
+                    </div>
+                </div>
+                <div class="carrier-info">
+                    <h3 class="carrier-name">Місто Транс</h3>
+                    <p class="carrier-type">Міска доставка</p>
+                    <div class="carrier-details">
+                        <span class="carrier-rating">⭐ 4.8</span>
+                        <span class="carrier-deliveries">723 доставки</span>
+                    </div>
+                    <div class="carrier-services">
+                        <span class="service-tag">Міська</span>
+                        <span class="service-tag">Термінова</span>
+                        <span class="service-tag">Документи</span>
+                    </div>
+                </div>
+                <div class="carrier-contact">
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <span class="contact-value">+380 67 987 65 43</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">info@citytrans.ua</span>
+                    </div>
+                </div>
+                <div class="carrier-actions">
+                    <button class="btn-primary">Замовити доставку</button>
+                    <button class="btn-secondary">Редагувати</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
