@@ -10,18 +10,15 @@
 <div class="container">
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-        <h2>SELLER</h2>
-        <ul>
-            <li>Каталог товарів</li>
-            <li>Замовлення</li>
-            <li>Нові пропозиції</li>
-            <li>Склади</li>
-            <li>Перевізники</li>
-            <li>Покупці</li>
-            <li>Чати</li>
-        </ul>
-    </aside>
+     <div id="sidebar"></div>
+
+        <script>
+        fetch('sidebar.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('sidebar').innerHTML = data;
+        });
+        </script>
 
     <!-- Main Content -->
     <main class="main">
