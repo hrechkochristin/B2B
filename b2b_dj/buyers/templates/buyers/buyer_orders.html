@@ -1,0 +1,60 @@
+{% extends "buyers/buyers_base.html" %}
+{% load static %}
+
+{% block buyer_content %}
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="{% url 'buyer_orders'%}">Мої замовлення</a></li>
+            <li><a href="{% url 'buyer_catalog'%}">Каталог</a></li>
+            <li><a href="{% url 'buyer_process'%}">В процесі</a></li>
+            <li><a href="{% url 'buyer_sellers'%}">Продавці</a></li>
+        </ul>
+    </aside>
+
+    <main class="main_page">
+
+        <div class="page-header">
+            <h1>Мої замовлення</h1>
+            <p>Перегляд та керування замовленнями</p>
+        </div>
+
+        <div class="orders-list">
+
+            <div class="order-card">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3>#12345</h3>
+                        <span class="order-date">26.03.2026</span>
+                    </div>
+                    <span class="order-status delivered">Доставлено</span>
+                </div>
+
+                <div class="order-items">
+                    <div class="order-item">
+                        <span class="item-name">Яйця перепілки</span>
+                        <span class="item-quantity">x10</span>
+                        <span class="item-price">500 грн</span>
+                    </div>
+                </div>
+
+                <div class="order-total">
+                    <span class="total-label">Сума:</span>
+                    <span class="total-amount">500 грн</span>
+                </div>
+
+                <div class="order-actions">
+                    <button class="btn-view">Деталі</button>
+                    <button class="btn-track">Відстежити</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+{% endblock %}
