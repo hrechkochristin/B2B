@@ -1,0 +1,25 @@
+<!-- templates/main/main_base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Мій сайт{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="layout">
+        <aside class="layout-sidebar">
+            {% block sidebar %}
+            {% endblock %}
+        </aside>
+
+        <main class="layout-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
