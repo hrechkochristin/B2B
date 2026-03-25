@@ -5,9 +5,29 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Мій сайт{% endblock %}</title>
-    {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
 </head>
 <body>
+    <!-- Header Bar -->
+    <header class="top-header">
+        <div class="header-left">
+            <button class="burger-menu" id="burger-toggle">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+            <h1 class="page-title">Seller Dashboard</h1>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
+                </div>
+                <span class="user-name">Продавець</span>
+            </div>
+        </div>
+    </header>
     <div class="layout">
         <aside class="layout-sidebar">
             {% block sidebar %}
