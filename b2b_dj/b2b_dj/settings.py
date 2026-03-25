@@ -1,3 +1,4 @@
+import os
 """
 Django settings for b2b_dj project.
 
@@ -77,13 +78,21 @@ WSGI_APPLICATION = 'b2b_dj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import os
+import urllib.parse
+
+DATABASE_PASSWORD = urllib.parse.quote_plus("Hrechko1702")  # якщо є спецсимволи
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.xehsouorkbtvtpegsqya',
+        'PASSWORD': DATABASE_PASSWORD,
+        'HOST': 'aws-1-eu-west-1.pooler.supabase.com',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
