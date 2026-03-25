@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Seller Dashboard</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-<body>
+{% extends "sellers/sellers_base.html" %}
+{% load static %}
 
-<!-- Header Bar -->
-<header class="top-header">
-    <div class="header-left">
-        <h1 class="page-title">Seller Dashboard</h1>
-    </div>
-    <div class="header-right">
-        <div class="user-info">
-            <div class="user-avatar">
-                <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
-            </div>
-            <span class="user-name">Продавець</span>
-        </div>
-    </div>
-</header>
-
+{% block seller_content %}
 <div class="container">
 
     <aside class="sidebar sidebar-always-visible" id="sidebar">
@@ -29,12 +9,12 @@
             <h2>Menu</h2>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="SellerNewOffers.html">Нові пропозиції</a></li>
-            <li><a href="SellerProduct.html">Мої товари</a></li>
-            <li><a href="SellerOrder.html">Замовлення</a></li>
-            <li><a href="SellerBuyers.html">Покупці</a></li>
-            <li class="active"><a href="SellerCarriers.html">Перевізники</a></li>
-            <li><a href="SellerStorage.html">Склади</a></li>
+            <li><a href="{% url 'seller_new_offers' %}">Нові пропозиції</a></li>
+            <li><a href="{% url 'seller_product' %}">Мої товари</a></li>
+            <li><a href="{% url 'seller_order' %}">Замовлення</a></li>
+            <li><a href="{% url 'seller_buyers' %}">Покупці</a></li>
+            <li class="active"><a href="{% url 'seller_carriers' %}">Перевізники</a></li>
+            <li><a href="{% url 'seller_storage' %}">Склади</a></li>
         </ul>
     </aside>
 
@@ -204,6 +184,4 @@
         </div>
     </main>
 </div>
-
-</body>
-</html>
+{% endblock %}
