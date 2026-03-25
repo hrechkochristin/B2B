@@ -1,0 +1,51 @@
+{% extends "buyers/buyers_base.html" %}
+{% load static %}
+
+{% block buyer_content %}
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'buyer_orders'%}">Мої замовлення</a></li>
+            <li><a href="{% url 'buyer_catalog'%}">Каталог</a></li>
+            <li class="active"><a href="{% url 'buyer_process'%}">В процесі</a></li>
+            <li><a href="{% url 'buyer_sellers'%}">Продавці</a></li>
+        </ul>
+    </aside>
+
+    <main class="main_page">
+
+        <div class="page-header">
+            <h1>Замовлення в процесі</h1>
+            <p>Контроль виконання</p>
+        </div>
+
+        <div class="pending-orders">
+
+            <div class="pending-card">
+                <div class="pending-header">
+                    <div class="pending-info">
+                        <h3>#56789</h3>
+                        <span class="pending-date">26.03.2026</span>
+                    </div>
+                    <span class="pending-priority medium">В роботі</span>
+                </div>
+
+                <div class="map">
+                    📍 Відстеження на карті
+                </div>
+
+                <div class="pending-actions">
+                    <button class="btn-track">Трекінг</button>
+                    <button class="btn-negotiate">Зв'язок</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+{% endblock %}

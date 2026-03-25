@@ -1,0 +1,55 @@
+{% extends "buyers/buyers_base.html" %}
+{% load static %}
+
+{% block buyer_content %}
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'buyer_orders'%}">Мої замовлення</a></li>
+            <li class="active"><a href="{% url 'buyer_catalog'%}">Каталог</a></li>
+            <li><a href="{% url 'buyer_process'%}">В процесі</a></li>
+            <li><a href="{% url 'buyer_sellers'%}">Продавці</a></li>
+        </ul>
+    </aside>
+
+    <main class="main_page">
+
+        <div class="page-header">
+            <h1>Каталог товарів</h1>
+            <p>Обирайте продукцію</p>
+        </div>
+
+        <div class="products-grid">
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/300/200">
+                    <div class="product-status in-stock">В наявності</div>
+                </div>
+
+                <div class="product-info">
+                    <h3 class="product-name">Яйця перепілки</h3>
+                    <p class="product-category">Фермерська продукція</p>
+
+                    <div class="product-details">
+                        <span class="product-price">50 грн</span>
+                        <span class="product-stock">100 шт</span>
+                    </div>
+
+                    <p class="product-description">Свіжі яйця</p>
+                </div>
+
+                <div class="product-actions">
+                    <button class="btn-edit">Додати</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "buyers/buyers_base.html" %}
+{% load static %}
+
+{% block buyer_content %}
+<div class="container">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'buyer_orders'%}">Мої замовлення</a></li>
+            <li><a href="{% url 'buyer_catalog'%}">Каталог</a></li>
+            <li><a href="{% url 'buyer_process'%}">В процесі</a></li>
+            <li><a href="{% url 'buyer_sellers'%}">Продавці</a></li>
+        </ul>
+    </aside>
+
+    <main class="main">
+
+        <div class="cards">
+            <a href="{% url 'buyer_orders' %}" class="card-btn">
+                <span class="btn-main">Мої замовлення</span>
+                <p class="btn-desc">Перегляд і редагування</p>
+            </a>
+
+            <a href="{% url 'buyer_catalog' %}" class="card-btn"> 
+                <span class="btn-main">Каталог</span>
+                <p class="btn-desc">Пошук товарів</p>
+            </a>
+
+            <a href="{% url 'buyer_process' %}" class="card-btn">
+                <span class="btn-main">Замовлення в процесі</span>
+                <p class="btn-desc">Статуси та доставка</p>
+            </a>
+
+            <a href="{% url 'buyer_sellers' %}" class="card-btn">
+                <span class="btn-main">Продавці</span>
+                <p class="btn-desc">Чати та угоди</p>
+            </a>
+
+        </div>
+    </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const burgerToggle = document.getElementById('burger-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    burgerToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('sidebar-open');
+        burgerToggle.classList.toggle('burger-active');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!sidebar.contains(event.target) && !burgerToggle.contains(event.target)) {
+            sidebar.classList.remove('sidebar-open');
+            burgerToggle.classList.remove('burger-active');
+        }
+    });
+});
+</script>
+{% endblock %}
