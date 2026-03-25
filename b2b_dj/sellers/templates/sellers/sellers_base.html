@@ -1,0 +1,13 @@
+<!-- templates/orders/sallers_base.html -->
+{% extends "main/main_base.html" %}
+
+{% block title %}Seller{% endblock %}
+
+{% block sidebar %}
+    {% include "sellers/includes/sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+    {% block seller_content %}
+    {% endblock %}
+{% endblock %}
