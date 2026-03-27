@@ -15,7 +15,7 @@ def buyer_process(request):
     return render(request, "buyers/buyer_process.html")
 
 def buyer_sellers(request):
-    carriers = User.objects.all().filter(is_carrier=True)
+    sellers = User.objects.all().filter(is_seller=True)
     return render(request, "buyers/buyer_sellers.html",{
-        "carriers":carriers,
+        "sellers":sellers,
     })

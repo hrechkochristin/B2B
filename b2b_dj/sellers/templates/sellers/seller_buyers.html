@@ -26,100 +26,32 @@
 
         <div class="buyers-grid">
             <!-- Buyer 1 -->
-            <div class="buyer-card">
-                <div class="buyer-avatar">
-                    <img src="https://via.placeholder.com/80x80/38bdf8/ffffff?text=AB" alt="Buyer Avatar">
-                    <div class="buyer-status online"></div>
-                </div>
-                <div class="buyer-info">
-                    <h3 class="buyer-name">Андрій Бондаренко</h3>
-                    <p class="buyer-company">ТОВ "ТехноСервіс"</p>
-                    <div class="buyer-details">
-                        <span class="buyer-orders">12 замовлень</span>
-                        <span class="buyer-rating">⭐ 4.8</span>
+            {% for buyer in buyers %}
+                <div class="buyer-card">
+                    <div class="buyer-avatar">
+                        <img src="https://via.placeholder.com/80x80/38bdf8/ffffff?text=AB" alt="Buyer Avatar">
+                        <div class="buyer-status online"></div>
                     </div>
-                    <div class="buyer-contact">
-                        <span class="buyer-phone">+380 50 123 45 67</span>
-                        <span class="buyer-email">andriy@technoservice.ua</span>
+                    <div class="buyer-info">
+                        <h3 class="buyer-name">{{buyer.name}}</h3>
+                        <p class="buyer-company">ТОВ "ТехноСервіс"</p>
+                        <div class="buyer-details">
+                            <span class="buyer-orders">12 замовлень</span>
+                            <span class="buyer-rating">⭐ 4.8</span>
+                        </div>
+                        <div class="buyer-contact">
+                            <span class="buyer-phone">+380 50 123 45 67</span>
+                            <span class="buyer-email">andriy@technoservice.ua</span>
+                        </div>
+                    </div>
+                    <div class="buyer-actions">
+                        <button class="btn-primary">Переглянути профіль</button>
+                        <button class="btn-secondary">Написати</button>
                     </div>
                 </div>
-                <div class="buyer-actions">
-                    <button class="btn-primary">Переглянути профіль</button>
-                    <button class="btn-secondary">Написати</button>
-                </div>
-            </div>
+            {% endfor %}
 
-            <!-- Buyer 2 -->
-            <div class="buyer-card">
-                <div class="buyer-avatar">
-                    <img src="https://via.placeholder.com/80x80/06b6d4/ffffff?text=МП" alt="Buyer Avatar">
-                    <div class="buyer-status offline"></div>
-                </div>
-                <div class="buyer-info">
-                    <h3 class="buyer-name">Марія Петренко</h3>
-                    <p class="buyer-company">ПП "ЕкоТрейд"</p>
-                    <div class="buyer-details">
-                        <span class="buyer-orders">8 замовлень</span>
-                        <span class="buyer-rating">⭐ 4.6</span>
-                    </div>
-                    <div class="buyer-contact">
-                        <span class="buyer-phone">+380 67 987 65 43</span>
-                        <span class="buyer-email">maria@ekotrade.ua</span>
-                    </div>
-                </div>
-                <div class="buyer-actions">
-                    <button class="btn-primary">Переглянути профіль</button>
-                    <button class="btn-secondary">Написати</button>
-                </div>
-            </div>
-
-            <!-- Buyer 3 -->
-            <div class="buyer-card">
-                <div class="buyer-avatar">
-                    <img src="https://via.placeholder.com/80x80/8b5cf6/ffffff?text=СК" alt="Buyer Avatar">
-                    <div class="buyer-status online"></div>
-                </div>
-                <div class="buyer-info">
-                    <h3 class="buyer-name">Сергій Коваленко</h3>
-                    <p class="buyer-company">ФОП Коваленко С.В.</p>
-                    <div class="buyer-details">
-                        <span class="buyer-orders">15 замовлень</span>
-                        <span class="buyer-rating">⭐ 4.9</span>
-                    </div>
-                    <div class="buyer-contact">
-                        <span class="buyer-phone">+380 93 456 78 90</span>
-                        <span class="buyer-email">sergiy.kovalenko@gmail.com</span>
-                    </div>
-                </div>
-                <div class="buyer-actions">
-                    <button class="btn-primary">Переглянути профіль</button>
-                    <button class="btn-secondary">Написати</button>
-                </div>
-            </div>
-
-            <!-- Buyer 4 -->
-            <div class="buyer-card">
-                <div class="buyer-avatar">
-                    <img src="https://via.placeholder.com/80x80/f59e0b/ffffff?text=ОМ" alt="Buyer Avatar">
-                    <div class="buyer-status away"></div>
-                </div>
-                <div class="buyer-info">
-                    <h3 class="buyer-name">Олена Мельник</h3>
-                    <p class="buyer-company">ТОВ "БудМатеріали"</p>
-                    <div class="buyer-details">
-                        <span class="buyer-orders">6 замовлень</span>
-                        <span class="buyer-rating">⭐ 4.7</span>
-                    </div>
-                    <div class="buyer-contact">
-                        <span class="buyer-phone">+380 99 321 65 87</span>
-                        <span class="buyer-email">olena@budmaterialy.ua</span>
-                    </div>
-                </div>
-                <div class="buyer-actions">
-                    <button class="btn-primary">Переглянути профіль</button>
-                    <button class="btn-secondary">Написати</button>
-                </div>
-            </div>
+            
 
             <!-- Template for additional buyers -->
             <!--
