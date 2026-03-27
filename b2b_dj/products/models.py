@@ -18,34 +18,31 @@ class Product(models.Model):
     ('no_control', 'Без контролю температури'), 
     ]
 
-    # Учасники
     seller = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='products')
 
-    # Розміщення
+    name = models.CharField(max_length=255)
+
     origin_location = models.CharField(max_length=255)
     origin_storage = models.CharField(max_length=255, blank=True)
 
-    # Фізичні параметри
-    quantity = models.IntegerField(help_text="Кількість одиниць товару")    
-    weight = models.FloatField(help_text="Вага в кг на одиницю товару")
-    volume = models.FloatField(help_text="Об'єм в м3 на одиницю товару")
-    
-    # Властивості продукту
-    is_perishable = models.BooleanField("Швидкопсувний", default=False)
-    is_fragile = models.BooleanField("Крихкий", default=False)
-    is_animal_origin = models.BooleanField("Тваринного походження", default=False)
-    is_hazardous = models.BooleanField("Небезпечний (ADR)", default=False)
-    temperature_regime = models.CharField(
-        max_length=20, 
-        choices=TEMPERATURE_CHOICES, 
-        default='ambient'
-    )
+    quantity = models.IntegerField()
+    weight = models.FloatField(help_text="Вага однієї одиниці")
+    volume = models.FloatField(help_text="Об'єм однієї одиниці")
 
-    manufactured_date = models.DateField("Дата виробництва", null=True, blank=True)
-    expiration_date = models.DateField("Дата закінчення терміну придатності", null=True, blank=True)
-    
-    # Опис та нотатки
-    notes = models.TextField(blank=True)
+    is_perishable = models.BooleanField(default=False)
+    is_fragile = models.BooleanField(default=False)
+    is_animal_origin = models.BooleanField(default=False)
+    is_hazardous = models.BooleanField(default=False)
+
+    temperature_regime = models.CharField(max_length=20)
+
+    expiration_date = models.DateField(null=True, blank=True)
+
+    def total_weight(self):
+        return self.quantity * self.weight
+
+    def total_volume(self):
+        return self.quantity * self.volume
 
     def __str__(self):
-        return f"Product {self.id} ({self.weight}kg)"
+        return self.name
