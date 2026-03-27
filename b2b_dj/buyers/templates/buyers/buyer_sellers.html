@@ -21,9 +21,9 @@
             <h1>Мої продавці</h1>
             <p>Керуйте продавцями, з якими укладено угоди, змінюйте умови співпраці та переходьте в чат</p>
         </div>
-
+        
         <div class="carriers-grid">
-
+            {% for carrier in carriers %}
             <div class="carrier-card">
                 <div class="carrier-header">
                     <div class="carrier-logo">
@@ -35,33 +35,32 @@
                 </div>
 
                 <div class="carrier-info">
-                    <h3 class="carrier-name">Степова перепілка</h3>
-                    <p class="carrier-type">Фермерська продукція</p>
+                    <h3 class="carrier-name">назва</h3>
+                    <p class="carrier-type">тип</p>
 
                     <div class="carrier-details">
-                        <span class="carrier-rating">⭐ 4.9</span>
-                        <span class="carrier-deliveries">18 угод</span>
+                        <span class="carrier-rating">рейтинг</span>
+                        <span class="carrier-deliveries">к-ть угод</span>
                     </div>
 
                     <div class="carrier-services">
-                        <span class="service-tag">Яйця</span>
-                        <span class="service-tag">М'ясо</span>
-                        <span class="service-tag">Регулярні поставки</span>
+                        <span class="service-tag">тег</span>
+
                     </div>
                 </div>
 
                 <div class="carrier-contact">
                     <div class="contact-item">
                         <span class="contact-label">Контакт:</span>
-                        <span class="contact-value">Іван Петренко</span>
+                        <span class="contact-value">{{carrier.name}}</span>
                     </div>
                     <div class="contact-item">
                         <span class="contact-label">Телефон:</span>
-                        <span class="contact-value">+380 67 111 22 33</span>
+                        <span class="contact-value">{{carrier.phone}}</span>
                     </div>
                     <div class="contact-item">
                         <span class="contact-label">Email:</span>
-                        <span class="contact-value">stepova@example.com</span>
+                        <span class="contact-value">{{carrier.email}}</span>
                     </div>
                     <div class="contact-item">
                         <span class="contact-label">Умови:</span>
@@ -74,110 +73,11 @@
                     <button class="btn-secondary">Змінити угоду</button>
                 </div>
             </div>
+            {% endfor %}
 
-            <div class="carrier-card">
-                <div class="carrier-header">
-                    <div class="carrier-logo">
-                        <img src="https://via.placeholder.com/60x60/06b6d4/ffffff?text=EF" alt="Seller Logo">
-                    </div>
-                    <div class="carrier-status">
-                        <span class="status-badge active">Активний</span>
-                    </div>
-                </div>
-
-                <div class="carrier-info">
-                    <h3 class="carrier-name">Eco Farm</h3>
-                    <p class="carrier-type">Органічна фермерська продукція</p>
-
-                    <div class="carrier-details">
-                        <span class="carrier-rating">⭐ 4.7</span>
-                        <span class="carrier-deliveries">11 угод</span>
-                    </div>
-
-                    <div class="carrier-services">
-                        <span class="service-tag">Органічне</span>
-                        <span class="service-tag">Фасоване</span>
-                        <span class="service-tag">Щотижневі поставки</span>
-                    </div>
-                </div>
-
-                <div class="carrier-contact">
-                    <div class="contact-item">
-                        <span class="contact-label">Контакт:</span>
-                        <span class="contact-value">Олена Савчук</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Телефон:</span>
-                        <span class="contact-value">+380 50 444 55 66</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Email:</span>
-                        <span class="contact-value">ecofarm@example.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Умови:</span>
-                        <span class="contact-value">Передплата 50%, доставка 1 день</span>
-                    </div>
-                </div>
-
-                <div class="carrier-actions">
-                    <button class="btn-primary">Чат</button>
-                    <button class="btn-secondary">Змінити угоду</button>
-                </div>
-            </div>
-
-            <div class="carrier-card">
-                <div class="carrier-header">
-                    <div class="carrier-logo">
-                        <img src="https://via.placeholder.com/60x60/8b5cf6/ffffff?text=FM" alt="Seller Logo">
-                    </div>
-                    <div class="carrier-status">
-                        <span class="status-badge inactive">Пауза</span>
-                    </div>
-                </div>
-
-                <div class="carrier-info">
-                    <h3 class="carrier-name">Farm Market</h3>
-                    <p class="carrier-type">Оптовий постачальник</p>
-
-                    <div class="carrier-details">
-                        <span class="carrier-rating">⭐ 4.4</span>
-                        <span class="carrier-deliveries">7 угод</span>
-                    </div>
-
-                    <div class="carrier-services">
-                        <span class="service-tag">Опт</span>
-                        <span class="service-tag">Сезонні поставки</span>
-                        <span class="service-tag">Самовивіз</span>
-                    </div>
-                </div>
-
-                <div class="carrier-contact">
-                    <div class="contact-item">
-                        <span class="contact-label">Контакт:</span>
-                        <span class="contact-value">Андрій Коваль</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Телефон:</span>
-                        <span class="contact-value">+380 63 777 88 99</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Email:</span>
-                        <span class="contact-value">farmmarket@example.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Умови:</span>
-                        <span class="contact-value">Самовивіз, опт від 100 шт</span>
-                    </div>
-                </div>
-
-                <div class="carrier-actions">
-                    <button class="btn-primary">Чат</button>
-                    <button class="btn-secondary">Змінити угоду</button>
-                </div>
-            </div>
 
         </div>
+        
     </main>
 </div>
 {% endblock %}
