@@ -23,56 +23,56 @@
         </div>
         
         <div class="carriers-grid">
-            {% for carrier in carriers %}
-            <div class="carrier-card">
-                <div class="carrier-header">
-                    <div class="carrier-logo">
-                        <img src="https://via.placeholder.com/60x60/38bdf8/ffffff?text=SP" alt="Seller Logo">
+            {% for seller in sellers %}
+                <div class="carrier-card">
+                    <div class="carrier-header">
+                        <div class="carrier-logo">
+                            <img src="https://via.placeholder.com/60x60/38bdf8/ffffff?text=SP" alt="Seller Logo">
+                        </div>
+                        <div class="carrier-status">
+                            <span class="status-badge active">Активний</span>
+                        </div>
                     </div>
-                    <div class="carrier-status">
-                        <span class="status-badge active">Активний</span>
+
+                    <div class="carrier-info">
+                        <h3 class="carrier-name">назва</h3>
+                        <p class="carrier-type">тип</p>
+
+                        <div class="carrier-details">
+                            <span class="carrier-rating">рейтинг</span>
+                            <span class="carrier-deliveries">к-ть угод</span>
+                        </div>
+
+                        <div class="carrier-services">
+                            <span class="service-tag">тег</span>
+
+                        </div>
+                    </div>
+
+                    <div class="carrier-contact">
+                        <div class="contact-item">
+                            <span class="contact-label">Контакт:</span>
+                            <span class="contact-value">{{seller.name}}</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Телефон:</span>
+                            <span class="contact-value">{{seller.phone}}</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Email:</span>
+                            <span class="contact-value">{{seller.email}}</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Умови:</span>
+                            <span class="contact-value">Післяплата, доставка 2 дні</span>
+                        </div>
+                    </div>
+
+                    <div class="carrier-actions">
+                        <button class="btn-primary">Чат</button>
+                        <button class="btn-secondary">Змінити угоду</button>
                     </div>
                 </div>
-
-                <div class="carrier-info">
-                    <h3 class="carrier-name">назва</h3>
-                    <p class="carrier-type">тип</p>
-
-                    <div class="carrier-details">
-                        <span class="carrier-rating">рейтинг</span>
-                        <span class="carrier-deliveries">к-ть угод</span>
-                    </div>
-
-                    <div class="carrier-services">
-                        <span class="service-tag">тег</span>
-
-                    </div>
-                </div>
-
-                <div class="carrier-contact">
-                    <div class="contact-item">
-                        <span class="contact-label">Контакт:</span>
-                        <span class="contact-value">{{carrier.name}}</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Телефон:</span>
-                        <span class="contact-value">{{carrier.phone}}</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Email:</span>
-                        <span class="contact-value">{{carrier.email}}</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Умови:</span>
-                        <span class="contact-value">Післяплата, доставка 2 дні</span>
-                    </div>
-                </div>
-
-                <div class="carrier-actions">
-                    <button class="btn-primary">Чат</button>
-                    <button class="btn-secondary">Змінити угоду</button>
-                </div>
-            </div>
             {% endfor %}
 
 
