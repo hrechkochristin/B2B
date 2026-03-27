@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from users.models import User
 
 # Create your views here.
 def main(request):
@@ -14,4 +15,7 @@ def buyer_process(request):
     return render(request, "buyers/buyer_process.html")
 
 def buyer_sellers(request):
-    return render(request, "buyers/buyer_sellers.html")
+    carriers = User.objects.all().filter(is_carrier=True)
+    return render(request, "buyers/buyer_sellers.html",{
+        "carriers":carriers,
+    })

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизація</title>
+    <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+</head>
+<body>
+    <div class="auth-page">
+
+        <div class="auth-background">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+            <div class="bg-circle bg-circle-3"></div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-card-top"></div>
+
+            <div class="auth-header">
+                <div class="auth-logo">B2B</div>
+                <h1>Вхід у систему</h1>
+                <p>Увійдіть за своїм user ID</p>
+            </div>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="user_id">User ID</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Введіть ваш user ID"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button type="submit" class="auth-btn">
+                    Увійти
+                </button>
+
+                <div class="auth-extra">
+                    <p>Поки що це шаблон сторінки входу.</p>
+                </div>
+
+
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>
