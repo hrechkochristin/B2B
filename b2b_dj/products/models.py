@@ -1,0 +1,51 @@
+from django.db import models
+
+class Product(models.Model):
+    TEMPERATURE_CHOICES = [
+    # Заморозка
+    ('deep_frozen', 'Глибока заморозка (-25°C до -18°C)'), 
+    ('frozen', 'Заморозка (-18°C до -10°C)'),
+    
+    # Охолодження
+    ('cold_chain', 'Холодний ланцюг (+2°C до +8°C)'), # Стандарт для фармакології та молочки
+    ('chilled', 'Охолоджене (+8°C до +15°C)'), # Овочі, фрукти
+    
+    # Контрольоване середовище
+    ('ambient', 'Кімнатна температура (+15°C до +25°C)'),
+    ('heated', 'З підігрівом (вище +25°C)'), # Для деяких видів клею або кондитерської сировини
+    
+    # Без контролю
+    ('no_control', 'Без контролю температури'), 
+    ]
+
+    # Учасники
+    seller = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='products')
+
+    # Розміщення
+    origin_location = models.CharField(max_length=255)
+    origin_storage = models.CharField(max_length=255, blank=True)
+
+    # Фізичні параметри
+    quantity = models.IntegerField(help_text="Кількість одиниць товару")    
+    weight = models.FloatField(help_text="Вага в кг на одиницю товару")
+    volume = models.FloatField(help_text="Об'єм в м3 на одиницю товару")
+    
+    # Властивості продукту
+    is_perishable = models.BooleanField("Швидкопсувний", default=False)
+    is_fragile = models.BooleanField("Крихкий", default=False)
+    is_animal_origin = models.BooleanField("Тваринного походження", default=False)
+    is_hazardous = models.BooleanField("Небезпечний (ADR)", default=False)
+    temperature_regime = models.CharField(
+        max_length=20, 
+        choices=TEMPERATURE_CHOICES, 
+        default='ambient'
+    )
+
+    manufactured_date = models.DateField("Дата виробництва", null=True, blank=True)
+    expiration_date = models.DateField("Дата закінчення терміну придатності", null=True, blank=True)
+    
+    # Опис та нотатки
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"Product {self.id} ({self.weight}kg)"
