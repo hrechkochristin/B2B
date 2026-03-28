@@ -14,6 +14,26 @@ class Product(models.Model):
         ('no_control', 'Без контролю температури'), 
     ]
 
+    CATEGORY_CHOICES = [
+    # Продукти харчування
+    ('bakery', 'Хлібобулочні та кондитерські вироби'),
+    ('dairy', 'Молочні продукти та яйця'),
+    ('meat_fish', 'М’ясо, птиця та риба'),
+    ('fruits_veg', 'Овочі та фрукти'),
+    ('grocery', 'Бакалія та консерви'),
+    ('beverages', 'Напої (безалкогольні та алкогольні)'),
+    
+    # Побутові та інші товари
+    ('household', 'Побутова хімія та товари для дому'),
+    ('hygiene', 'Гігієна та косметика'),
+    ('electronics', 'Електроніка та техніка'),
+    ('apparel', 'Одяг та взуття'),
+    ('pet_supplies', 'Товари для тварин'),
+    
+    # Інше
+    ('other', 'Інше / Різне'),
+]
+
     STOCK_CHOISES = [
         ('in_stock', 'В наявності'),
         ('out_of_stock', 'Немає в наявності'),
@@ -23,7 +43,7 @@ class Product(models.Model):
     seller = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='products')
 
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     origin_location = models.CharField(max_length=255)
@@ -40,8 +60,6 @@ class Product(models.Model):
     is_hazardous = models.BooleanField(default=False)
 
     temperature_regime = models.CharField(max_length=20, choices=TEMPERATURE_CHOICES, default='no_control')
-
-    expiration_date = models.DateField(null=True, blank=True)
 
     description = models.TextField(blank=True)
 

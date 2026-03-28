@@ -23,6 +23,86 @@
             <h1>Керування товарами</h1>
             <p>Додавайте, редагуйте та керуйте своїм каталогом продукції</p>
             <button class="btn-add-product">+ Додати товар</button>
+
+            <div id="productModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>Додати новий товар</h2>
+                    
+                    <form id="productForm">
+                        <label for="productName">Назва товару:</label>
+                        <input type="text" id="productName" name="productName" required>
+
+                        <label for="productCategory">Категорія:</label>
+                        <select id="productCategory" name="productCategory" required>
+                            <option value="" disabled selected>Оберіть категорію...</option>
+                            <optgroup label="Продукти харчування">
+                                <option value="bakery">Хлібобулочні та кондитерські вироби</option>
+                                <option value="dairy">Молочні продукти та яйця</option>
+                                <option value="meat_fish">М’ясо, птиця та риба</option>
+                                <option value="fruits_veg">Овочі та фрукти</option>
+                                <option value="grocery">Бакалія та консерви</option>
+                                <option value="beverages">Напої</option>
+                            </optgroup>
+                            <optgroup label="Побутові товари">
+                                <option value="household">Побутова хімія та товари для дому</option>
+                                <option value="hygiene">Гігієна та косметика</option>
+                                <option value="electronics">Електроніка та техніка</option>
+                                <option value="apparel">Одяг та взуття</option>
+                                <option value="pet_supplies">Товари для тварин</option>
+                            </optgroup>
+                            <option value="other">Інше / Різне</option>
+                        </select>
+
+                        <div class="row">
+                            <div class="col">
+                                <label for="productPrice">Ціна (₴):</label>
+                                <input type="number" id="productPrice" name="productPrice" required>
+                            </div>
+                            <div class="col">
+                                <label for="productStock">Кількість:</label>
+                                <input type="number" id="productStock" name="productStock" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <label for="productWeight">Вага (кг):</label>
+                                <input type="number" step="0.01" id="productWeight" name="productWeight" required>
+                            </div>
+                            <div class="col">
+                                <label for="productVolume">Об'єм (м³):</label>
+                                <input type="number" step="0.01" id="productVolume" name="productVolume" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Особливості товару:</strong></label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item"><input type="checkbox" name="features" value="perishable"> Швидкопсувний</label>
+                                <label class="checkbox-item"><input type="checkbox" name="features" value="fragile"> Крихкий</label>
+                                <label class="checkbox-item"><input type="checkbox" name="features" value="animal_origin"> Тваринного походження</label>
+                                <label class="checkbox-item"><input type="checkbox" name="features" value="hazardous"> Небезпечний (ADR)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Температурні режими:</strong></label>
+                            <div class="temp-grid">
+                                <label class="temp-item"><input type="checkbox" name="temp_range" value="frozen"> Заморозка (-18°C)</label>
+                                <label class="temp-item"><input type="checkbox" name="temp_range" value="cold_chain"> Холод (+2°C до +8°C)</label>
+                                <label class="temp-item"><input type="checkbox" name="temp_range" value="ambient"> Кімнатна (+15°C)</label>
+                                <label class="temp-item"><input type="checkbox" name="temp_range" value="no_control"> Без контролю</label>
+                            </div>
+                        </div>
+
+                        <label for="productDescription">Опис:</label>
+                        <textarea id="productDescription" name="productDescription" rows="3"></textarea>
+
+                        <button type="submit" class="btn-submit">Зберегти товар</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class="products-grid">
@@ -120,4 +200,5 @@
         </div>
     </main>
 </div>
+<script src="D:\B2B\script.js"></script>
 {% endblock %}
