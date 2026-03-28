@@ -24,23 +24,23 @@
         </div>
 
         <div class="products-grid">
-
+            {% for product in products %}
             <div class="product-card">
                 <div class="product-image">
                     <img src="https://picsum.photos/300/200">
-                    <div class="product-status in-stock">В наявності</div>
+                    <div class="product-status in-stock">{{product.stock}}</div>
                 </div>
 
                 <div class="product-info">
-                    <h3 class="product-name">Яйця перепілки</h3>
-                    <p class="product-category">Фермерська продукція</p>
+                    <h3 class="product-name">{{product.name}}</h3>
+                    <p class="product-category">{{product.category}}</p>
 
                     <div class="product-details">
-                        <span class="product-price">50 грн</span>
-                        <span class="product-stock">100 шт</span>
+                        <span class="product-price">{{product.price}} грн</span>
+                        <span class="product-stock">{{product.quantity}} шт</span>
                     </div>
 
-                    <p class="product-description">Свіжі яйця</p>
+                    <p class="product-description">{{product.description}}</p>
                 </div>
 
                 <div class="product-actions">

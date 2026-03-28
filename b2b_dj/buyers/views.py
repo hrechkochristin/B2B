@@ -1,5 +1,8 @@
 from django.shortcuts import render
+
+from orders.models import Order
 from users.models import User
+from products.models import Product
 
 # Create your views here.
 def main(request):
@@ -18,4 +21,16 @@ def buyer_sellers(request):
     sellers = User.objects.all().filter(is_seller=True)
     return render(request, "buyers/buyer_sellers.html",{
         "sellers":sellers,
+    })
+
+def buyer_catalog(request):
+    products = Product.objects.all()
+    return render(request, "buyers/buyer_catalog.html",{
+        "products":products,
+    })
+
+def buyer_orders(request):
+    orders = Order.objects.all()
+    return render(request, "buyers/buyer_orders.html",{
+        "orders":orders,
     })
