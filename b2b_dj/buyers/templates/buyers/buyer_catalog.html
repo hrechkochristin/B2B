@@ -25,28 +25,29 @@
 
         <div class="products-grid">
             {% for product in products %}
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://picsum.photos/300/200">
-                    <div class="product-status in-stock">{{product.stock}}</div>
-                </div>
-
-                <div class="product-info">
-                    <h3 class="product-name">{{product.name}}</h3>
-                    <p class="product-category">{{product.category}}</p>
-
-                    <div class="product-details">
-                        <span class="product-price">{{product.price}} грн</span>
-                        <span class="product-stock">{{product.quantity}} шт</span>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://picsum.photos/300/200">
+                        <div class="product-status in-stock">{{product.stock}}</div>
                     </div>
 
-                    <p class="product-description">{{product.description}}</p>
-                </div>
+                    <div class="product-info">
+                        <h3 class="product-name">{{product.name}}</h3>
+                        <p class="product-category">{{product.category}}</p>
 
-                <div class="product-actions">
-                    <button class="btn-edit">Додати</button>
+                        <div class="product-details">
+                            <span class="product-price">{{product.price}} грн</span>
+                            <span class="product-stock">{{product.quantity}} шт</span>
+                        </div>
+
+                        <p class="product-description">{{product.description}}</p>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="btn-edit">Додати</button>
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
 
         </div>
 
