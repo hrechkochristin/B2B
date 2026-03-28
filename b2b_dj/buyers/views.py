@@ -30,7 +30,9 @@ def buyer_catalog(request):
     })
 
 def buyer_orders(request):
-    orders = Order.objects.all()
-    return render(request, "buyers/buyer_orders.html",{
-        "orders":orders,
+    # Вибираємо тільки замовлення поточного користувача
+    orders = Order.objects.filter(user=request.user).prefetch_related('items__product')
+
+    return render(request, "buyers/buyer_orders.html", {
+        "orders": orders,
     })
