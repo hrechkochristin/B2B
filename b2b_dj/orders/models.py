@@ -31,6 +31,8 @@ class Order(models.Model):
         related_name='orders'
     )
 
+    price = models.DecimalField(max_digits=10, decimal_places=2)    
+
     # 📍 маршрут
     pickup_address = models.CharField(max_length=255)
     delivery_address = models.CharField(max_length=255)

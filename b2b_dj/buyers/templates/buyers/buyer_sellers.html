@@ -23,7 +23,7 @@
         </div>
         
         <div class="carriers-grid">
-            {% for seller in sellers %}
+            {% for carrier in carriers %}
                 <div class="carrier-card">
                     <div class="carrier-header">
                         <div class="carrier-logo">
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="carrier-info">
-                        <h3 class="carrier-name">назва</h3>
+                        <h3 class="carrier-name">{{seller.name}}</h3>
                         <p class="carrier-type">тип</p>
 
                         <div class="carrier-details">
@@ -50,10 +50,6 @@
                     </div>
 
                     <div class="carrier-contact">
-                        <div class="contact-item">
-                            <span class="contact-label">Контакт:</span>
-                            <span class="contact-value">{{seller.name}}</span>
-                        </div>
                         <div class="contact-item">
                             <span class="contact-label">Телефон:</span>
                             <span class="contact-value">{{seller.phone}}</span>

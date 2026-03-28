@@ -24,27 +24,28 @@
         </div>
 
         <div class="orders-list">
-
+                {% for order in orders %}
             <div class="order-card">
                 <div class="order-header">
                     <div class="order-info">
                         <h3>#12345</h3>
-                        <span class="order-date">26.03.2026</span>
+                        <span class="order-date">{{order.created_at}}</span>
                     </div>
-                    <span class="order-status delivered">Доставлено</span>
+                    <span class="order-status delivered">{{order.status}}</span>
                 </div>
 
                 <div class="order-items">
+                    {% for product in order.products.all %}
                     <div class="order-item">
-                        <span class="item-name">Яйця перепілки</span>
-                        <span class="item-quantity">x10</span>
-                        <span class="item-price">500 грн</span>
+                        <span class="item-name">{{product.name}}</span>
+                        <span class="item-quantity">x{{product.quantity}}</span>
+                        <span class="item-price">{{product.price * product.quantity}} грн</span>
                     </div>
                 </div>
 
                 <div class="order-total">
                     <span class="total-label">Сума:</span>
-                    <span class="total-amount">500 грн</span>
+                    <span class="total-amount">{{order.price}} грн</span>
                 </div>
 
                 <div class="order-actions">
