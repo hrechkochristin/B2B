@@ -1,14 +1,15 @@
-# seed_script.py
 import os
 import django
 import random
 from faker import Faker
+from decimal import Decimal
+from django.utils import timezone
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'b2b_dj.settings')
 django.setup()
 
 from users.models import User
-from orders.models import Order
+from orders.models import Order, OrderItem
 from products.models import Product
 from deliveries.models import Delivery
 
@@ -36,14 +37,9 @@ for _ in range(10):
 
 print("✅ Users created")
 
-sellers = [u for u in users if u.is_seller]
-buyers = [u for u in users if u.is_buyer]
-carriers = [u for u in users if u.is_carrier]
-
-# fallback щоб не впасти
-if not sellers: sellers = users
-if not buyers: buyers = users
-if not carriers: carriers = users
+sellers = [u for u in users if u.is_seller] or users
+buyers = [u for u in users if u.is_buyer] or users
+carriers = [u for u in users if u.is_carrier] or users
 
 # -----------------------
 # 2. PRODUCTS
@@ -56,10 +52,15 @@ for _ in range(10):
         seller=random.choice(sellers),
         name=fake.word(),
 
+        category=random.choice([c[0] for c in Product.CATEGORY_CHOICES]),
+        price=Decimal(random.randint(10, 500)),
+
         origin_location=fake.city(),
         origin_storage=fake.company(),
 
         quantity=random.randint(1, 50),
+        stock=random.choice([c[0] for c in Product.STOCK_CHOISES]),
+
         weight=round(random.uniform(0.5, 20), 2),
         volume=round(random.uniform(0.01, 2), 2),
 
@@ -68,10 +69,9 @@ for _ in range(10):
         is_animal_origin=random.choice([True, False]),
         is_hazardous=random.choice([True, False]),
 
-        temperature_regime=random.choice([
-            'deep_frozen', 'frozen', 'cold_chain',
-            'chilled', 'ambient', 'heated', 'no_control'
-        ]),
+        temperature_regime=random.choice([c[0] for c in Product.TEMPERATURE_CHOICES]),
+
+        description=fake.text(max_nb_chars=100),
     )
     products.append(product)
 
@@ -98,7 +98,7 @@ for _ in range(10):
 print("✅ Deliveries created")
 
 # -----------------------
-# 4. ORDERS
+# 4. ORDERS + ORDER ITEMS
 # -----------------------
 
 for _ in range(10):
@@ -118,14 +118,25 @@ for _ in range(10):
         status=random.choice([
             'created', 'confirmed', 'assigned',
             'picked_up', 'in_transit', 'delivered'
-        ])
+        ]),
+
+        # нові поля
+        time_started=timezone.now() if random.choice([True, False]) else None,
+        time_finished=timezone.now() if random.choice([True, False]) else None,
+        notes=fake.text(max_nb_chars=50),
     )
 
-    # додаємо 1-3 продукти в ордер
+    # 🔥 створюємо OrderItem замість просто M2M
     selected_products = random.sample(products, random.randint(1, 3))
-    order.products.set(selected_products)
 
-print("✅ Orders created")
+    for product in selected_products:
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            quantity=random.randint(1, 5),
+            price=product.price
+        )
+
+print("✅ Orders + OrderItems created")
 
 print("🎉 ALL DATA GENERATED SUCCESSFULLY")
-print("Hello world!")
