@@ -25,142 +25,93 @@
         </div>
 
         <div class="pending-orders">
-            <!-- Pending Order 1 -->
-            <div class="pending-card">
-                <div class="pending-header">
-                    <div class="pending-info">
-                        <h3 class="pending-number">#PEN-2024-001</h3>
-                        <span class="pending-date">18 березня 2024, 14:30</span>
-                    </div>
-                    <div class="pending-priority high">Високий пріоритет</div>
-                </div>
-                <div class="pending-customer">
-                    <div class="customer-avatar">
-                        <img src="https://via.placeholder.com/50x50/38bdf8/ffffff?text=АБ" alt="Customer">
-                    </div>
-                    <div class="customer-details">
-                        <h4 class="customer-name">Андрій Бондаренко</h4>
-                        <p class="customer-company">ТОВ "ТехноСервіс"</p>
-                        <p class="customer-contact">+380 50 123 45 67 • andriy@technoservice.ua</p>
-                    </div>
-                </div>
-                <div class="pending-items">
-                    <h4>Замовлені товари:</h4>
-                    <div class="item-list">
-                        <div class="pending-item">
-                            <span class="item-name">Ноутбук Lenovo ThinkPad X1</span>
-                            <span class="item-quantity">x1</span>
-                            <span class="item-price">₴45,000</span>
+            {% for order in orders %}
+                <div class="pending-card">
+                    <div class="pending-header">
+                        <div class="pending-info">
+                            <h3 class="pending-number">#PEN-{{ order.id|stringformat:"04d" }}</h3>
+                            <span class="pending-date">{{ order.created_at|date:"d-m-Y, H:i" }}</span>
                         </div>
-                        <div class="pending-item">
-                            <span class="item-name">Бездротова миша Logitech MX Master</span>
-                            <span class="item-quantity">x2</span>
-                            <span class="item-price">₴5,600</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="pending-total">
-                    <span class="total-label">Загальна сума:</span>
-                    <span class="total-amount">₴50,600</span>
-                </div>
-                <div class="pending-notes">
-                    <h4>Примітки покупця:</h4>
-                    <p>Потрібно терміново, доставка до офісу в Києві</p>
-                </div>
-                <div class="pending-actions">
-                    <button class="btn-approve">Підтвердити</button>
-                    <button class="btn-reject">Відхилити</button>
-                    <button class="btn-negotiate">Обговорити</button>
-                </div>
-            </div>
 
-            <!-- Pending Order 2 -->
-            <div class="pending-card">
-                <div class="pending-header">
-                    <div class="pending-info">
-                        <h3 class="pending-number">#PEN-2024-002</h3>
-                        <span class="pending-date">17 березня 2024, 09:15</span>
-                    </div>
-                    <div class="pending-priority medium">Середній пріоритет</div>
-                </div>
-                <div class="pending-customer">
-                    <div class="customer-avatar">
-                        <img src="https://via.placeholder.com/50x50/06b6d4/ffffff?text=МП" alt="Customer">
-                    </div>
-                    <div class="customer-details">
-                        <h4 class="customer-name">Марія Петренко</h4>
-                        <p class="customer-company">ПП "ЕкоТрейд"</p>
-                        <p class="customer-contact">+380 67 987 65 43 • maria@ekotrade.ua</p>
-                    </div>
-                </div>
-                <div class="pending-items">
-                    <h4>Замовлені товари:</h4>
-                    <div class="item-list">
-                        <div class="pending-item">
-                            <span class="item-name">Монітор Dell 27" 4K</span>
-                            <span class="item-quantity">x3</span>
-                            <span class="item-price">₴37,500</span>
+                        <div class="pending-priority high">
+                            {{ order.get_status_display }}
                         </div>
                     </div>
-                </div>
-                <div class="pending-total">
-                    <span class="total-label">Загальна сума:</span>
-                    <span class="total-amount">₴37,500</span>
-                </div>
-                <div class="pending-notes">
-                    <h4>Примітки покупця:</h4>
-                    <p>Доставка в Одесу, бажано до п'ятниці</p>
-                </div>
-                <div class="pending-actions">
-                    <button class="btn-approve">Підтвердити</button>
-                    <button class="btn-reject">Відхилити</button>
-                    <button class="btn-negotiate">Обговорити</button>
-                </div>
-            </div>
 
-            <!-- Pending Order 3 -->
-            <div class="pending-card">
-                <div class="pending-header">
-                    <div class="pending-info">
-                        <h3 class="pending-number">#PEN-2024-003</h3>
-                        <span class="pending-date">16 березня 2024, 16:45</span>
+                    <div class="pending-customer">
+                        <div class="customer-avatar">
+                            <img src="https://via.placeholder.com/50x50/38bdf8/ffffff?text={% if order.buyer %}{{ order.buyer.username|slice:':2'|upper }}{% else %}--{% endif %}" alt="Customer">
+                        </div>
+
+                        <div class="customer-details">
+                            <h4 class="customer-name">
+                                {% if order.buyer %}
+                                    {{ order.buyer.username }}
+                                {% else %}
+                                    Покупця не вказано
+                                {% endif %}
+                            </h4>
+
+                            <p class="customer-company">
+                                Адреса доставки: {{ order.delivery_address }}
+                            </p>
+
+                            <p class="customer-contact">
+                                Адреса відправлення: {{ order.pickup_address }}
+                            </p>
+                        </div>
                     </div>
-                    <div class="pending-priority low">Низький пріоритет</div>
+
+                    <div class="pending-items">
+                        <h4>Замовлені товари:</h4>
+
+                        <div class="item-list">
+                            {% for item in order.items.all %}
+                                <div class="pending-item">
+                                    <span class="item-name">{{ item.product.name }}</span>
+                                    <span class="item-quantity">x{{ item.quantity }}</span>
+                                    <span class="item-price">₴{{ item.price }}</span>
+                                </div>
+                            {% empty %}
+                                <div class="pending-item">
+                                    <span class="item-name">Товари відсутні</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="pending-total">
+                        <span class="total-label">Загальна сума:</span>
+                        <span class="total-amount">₴{{ order.total_price }}</span>
+                    </div>
+
+                    <div class="pending-notes">
+                        <h4>Примітки покупця:</h4>
+                        <p>
+                            {% if order.notes %}
+                                {{ order.notes }}
+                            {% else %}
+                                Приміток немає
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="pending-actions">
+                        <button class="btn-approve" type="button">Підтвердити</button>
+                        <button class="btn-reject" type="button">Відхилити</button>
+                        <button class="btn-negotiate" type="button">Обговорити</button>
+                    </div>
                 </div>
-                <div class="pending-customer">
-                    <div class="customer-avatar">
-                        <img src="https://via.placeholder.com/50x50/8b5cf6/ffffff?text=СК" alt="Customer">
-                    </div>
-                    <div class="customer-details">
-                        <h4 class="customer-name">Сергій Коваленко</h4>
-                        <p class="customer-company">ФОП Коваленко С.В.</p>
-                        <p class="customer-contact">+380 93 456 78 90 • sergiy.kovalenko@gmail.com</p>
-                    </div>
-                </div>
-                <div class="pending-items">
-                    <h4>Замовлені товари:</h4>
-                    <div class="item-list">
-                        <div class="pending-item">
-                            <span class="item-name">Механічна клавіатура Keychron</span>
-                            <span class="item-quantity">x5</span>
-                            <span class="item-price">₴16,000</span>
+            {% empty %}
+                <div class="pending-card">
+                    <div class="pending-header">
+                        <div class="pending-info">
+                            <h3 class="pending-number">Нових замовлень немає</h3>
+                            <span class="pending-date">Усі заявки опрацьовані</span>
                         </div>
                     </div>
                 </div>
-                <div class="pending-total">
-                    <span class="total-label">Загальна сума:</span>
-                    <span class="total-amount">₴16,000</span>
-                </div>
-                <div class="pending-notes">
-                    <h4>Примітки покупця:</h4>
-                    <p>Оптове замовлення, потрібна знижка</p>
-                </div>
-                <div class="pending-actions">
-                    <button class="btn-approve">Підтвердити</button>
-                    <button class="btn-reject">Відхилити</button>
-                    <button class="btn-negotiate">Обговорити</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </main>
 </div>
