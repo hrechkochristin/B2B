@@ -29,7 +29,9 @@
                     <span class="close-button">&times;</span>
                     <h2>Додати новий товар</h2>
                     
-                    <form id="productForm">
+                    <form id="productForm" method="post">
+                        {% csrf_token %}
+
                         <label for="productName">Назва товару:</label>
                         <input type="text" id="productName" name="productName" required>
 
@@ -57,7 +59,7 @@
                         <div class="row">
                             <div class="col">
                                 <label for="productPrice">Ціна (₴):</label>
-                                <input type="number" id="productPrice" name="productPrice" required>
+                                <input type="number" step="0.01" id="productPrice" name="productPrice" required>
                             </div>
                             <div class="col">
                                 <label for="productStock">Кількість:</label>
@@ -73,6 +75,17 @@
                             <div class="col">
                                 <label for="productVolume">Об'єм (м³):</label>
                                 <input type="number" step="0.01" id="productVolume" name="productVolume" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <label for="originLocation">Локація походження:</label>
+                                <input type="text" id="originLocation" name="originLocation" required>
+                            </div>
+                            <div class="col">
+                                <label for="originStorage">Склад / місце зберігання:</label>
+                                <input type="text" id="originStorage" name="originStorage">
                             </div>
                         </div>
 
@@ -106,97 +119,30 @@
         </div>
 
         <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/200x150/38bdf8/ffffff?text=Ноутбук" alt="Product Image">
-                    <div class="product-status in-stock">В наявності</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Ноутбук Lenovo ThinkPad X1</h3>
-                    <p class="product-category">Електроніка</p>
-                    <div class="product-details">
-                        <span class="product-price">₴45,000</span>
-                        <span class="product-stock">12 шт</span>
+            {% for product in products%}
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200x150/38bdf8/ffffff?text=Ноутбук" alt="Product Image">
+                        <div class="product-status in-stock">{{product.stock}}</div>
                     </div>
-                    <div class="product-description">
-                        Професійний ноутбук для бізнесу з високою продуктивністю
+                    <div class="product-info">
+                        <h3 class="product-name">{{product.name}}</h3>
+                        <p class="product-category">{{product.category}}</p>
+                        <div class="product-details">
+                            <span class="product-price">₴{{product.price}}</span>
+                            <span class="product-stock">к-ть:{{product.quantity}}</span>
+                        </div>
+                        <div class="product-description">
+                            {{product.description}}
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn-edit">Редагувати</button>
+                        <button class="btn-delete">Видалити</button>
                     </div>
                 </div>
-                <div class="product-actions">
-                    <button class="btn-edit">Редагувати</button>
-                    <button class="btn-delete">Видалити</button>
-                </div>
-            </div>
+            {%endfor%}
 
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/200x150/06b6d4/ffffff?text=Монітор" alt="Product Image">
-                    <div class="product-status low-stock">Мало</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Монітор Dell 27"</h3>
-                    <p class="product-category">Електроніка</p>
-                    <div class="product-details">
-                        <span class="product-price">₴12,500</span>
-                        <span class="product-stock">3 шт</span>
-                    </div>
-                    <div class="product-description">
-                        4K монітор з відмінною якістю зображення
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <button class="btn-edit">Редагувати</button>
-                    <button class="btn-delete">Видалити</button>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/200x150/8b5cf6/ffffff?text=Клавіатура" alt="Product Image">
-                    <div class="product-status out-of-stock">Немає</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Механічна клавіатура Keychron</h3>
-                    <p class="product-category">Аксесуари</p>
-                    <div class="product-details">
-                        <span class="product-price">₴3,200</span>
-                        <span class="product-stock">0 шт</span>
-                    </div>
-                    <div class="product-description">
-                        Бездротова механічна клавіатура з підсвіткою
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <button class="btn-edit">Редагувати</button>
-                    <button class="btn-delete">Видалити</button>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/200x150/f59e0b/ffffff?text=Миша" alt="Product Image">
-                    <div class="product-status in-stock">В наявності</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Бездротова миша Logitech MX Master</h3>
-                    <p class="product-category">Аксесуари</p>
-                    <div class="product-details">
-                        <span class="product-price">₴2,800</span>
-                        <span class="product-stock">8 шт</span>
-                    </div>
-                    <div class="product-description">
-                        Ергономічна миша для професіоналів
-                    </div>
-                </div>
-                <div class="product-actions">
-                    <button class="btn-edit">Редагувати</button>
-                    <button class="btn-delete">Видалити</button>
-                </div>
-            </div>
         </div>
     </main>
 </div>
