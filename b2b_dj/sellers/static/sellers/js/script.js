@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Конфігурація (ЗАМІНИ НА СВОЇ ДАНІ З SUPABASE DASHBOARD)
     const SUPABASE_URL = 'https://xehsouorkbtvtpegsqya.supabase.co'; 
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlaHNvdW9ya2J0dnRwZWdzcXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Njk0NTIsImV4cCI6MjA5MDA0NTQ1Mn0.4X9rsF6b0YPHIMfzO4Ma7r1ilRV71vz33-L55A_B3OU'; // Візьми його в Settings -> API
-    const TABLE_NAME = 'products';
+    const TABLE_NAME = 'products_product'; // Назва таблиці, яку ти створив у Supabase (наприклад, 'products')
 
     // 2. Пошук елементів
     const modal = document.getElementById('productModal');
@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             stock: parseInt(formData.get('productStock')) || 0,
             weight: parseFloat(formData.get('productWeight')) || 0,
             volume: parseFloat(formData.get('productVolume')) || 0,
-            features: formData.getAll('features'), // Масив
-            temp_range: formData.getAll('temp_range'), // Масив
+            // features: formData.getAll('features'), // Масив
+            temperature_regime: formData.getAll('temp_range'), // Масив
             description: formData.get('productDescription')
         };
 
