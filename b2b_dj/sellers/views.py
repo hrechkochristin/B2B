@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.db.models import Prefetch
 from users.models import User
 from products.models import Product
+from orders.models import Order
+from carts.models import CartItem
 
 # Create your views here.
 def main(request):
@@ -52,7 +55,30 @@ def seller_product(request):
     })
 
 def seller_order(request):
-    return render(request, "sellers/seller_order.html")
+    username = request.session.get("username")
+
+    if not username:
+        return redirect("main")
+
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return redirect("main")
+
+    orders = (
+        Order.objects
+        .filter(seller=user)
+        .select_related("buyer", "delivery")
+        .prefetch_related(
+            Prefetch("items", queryset=CartItem.objects.select_related("product")),
+            "products"
+        )
+        .order_by("-id")
+    )
+
+    return render(request, "sellers/seller_order.html", {
+        "orders": orders,
+    })
 
 def seller_buyers(request):
     buyers = User.objects.all().filter(is_buyer=True)

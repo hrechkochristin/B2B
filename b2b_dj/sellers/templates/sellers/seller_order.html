@@ -26,123 +26,87 @@
 
         <div class="orders-filters">
             <button class="filter-btn active" data-filter="all">Всі</button>
-            <button class="filter-btn" data-filter="pending">Очікують</button>
-            <button class="filter-btn" data-filter="processing">В обробці</button>
-            <button class="filter-btn" data-filter="shipped">Відправлені</button>
+            <button class="filter-btn" data-filter="created">Створено</button>
+            <button class="filter-btn" data-filter="confirmed">Підтверджено</button>
+            <button class="filter-btn" data-filter="in_transit">В дорозі</button>
             <button class="filter-btn" data-filter="delivered">Доставлені</button>
+            <button class="filter-btn" data-filter="cancelled">Скасовані</button>
         </div>
 
         <div class="orders-list">
-            <!-- Order 1 -->
-            <div class="order-card">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3 class="order-number">#ORD-2024-001</h3>
-                        <span class="order-date">15 березня 2024</span>
-                    </div>
-                    <div class="order-status delivered">Доставлено</div>
-                </div>
-                <div class="order-customer">
-                    <div class="customer-avatar">
-                        <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=АБ" alt="Customer">
-                    </div>
-                    <div class="customer-info">
-                        <span class="customer-name">Андрій Бондаренко</span>
-                        <span class="customer-company">ТОВ "ТехноСервіс"</span>
-                    </div>
-                </div>
-                <div class="order-items">
-                    <div class="order-item">
-                        <span class="item-name">Ноутбук Lenovo ThinkPad X1</span>
-                        <span class="item-quantity">x1</span>
-                        <span class="item-price">₴45,000</span>
-                    </div>
-                </div>
-                <div class="order-total">
-                    <span class="total-label">Загальна сума:</span>
-                    <span class="total-amount">₴45,000</span>
-                </div>
-                <div class="order-actions">
-                    <button class="btn-view">Переглянути</button>
-                    <button class="btn-reorder">Повторити</button>
-                </div>
-            </div>
+            {% for order in orders %}
+                <div class="order-card" data-status="{{ order.status }}">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3 class="order-number">#ORD-{{ order.id|stringformat:"04d" }}</h3>
+                            <span class="order-date">{{ order.created_at|date:"d-m-Y H:i" }}</span>
+                        </div>
 
-            <!-- Order 2 -->
-            <div class="order-card">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3 class="order-number">#ORD-2024-002</h3>
-                        <span class="order-date">12 березня 2024</span>
+                        <div class="order-status {{ order.status }}">
+                            {{ order.get_status_display }}
+                        </div>
                     </div>
-                    <div class="order-status shipped">Відправлено</div>
-                </div>
-                <div class="order-customer">
-                    <div class="customer-avatar">
-                        <img src="https://via.placeholder.com/40x40/06b6d4/ffffff?text=МП" alt="Customer">
-                    </div>
-                    <div class="customer-info">
-                        <span class="customer-name">Марія Петренко</span>
-                        <span class="customer-company">ПП "ЕкоТрейд"</span>
-                    </div>
-                </div>
-                <div class="order-items">
-                    <div class="order-item">
-                        <span class="item-name">Монітор Dell 27"</span>
-                        <span class="item-quantity">x2</span>
-                        <span class="item-price">₴25,000</span>
-                    </div>
-                </div>
-                <div class="order-total">
-                    <span class="total-label">Загальна сума:</span>
-                    <span class="total-amount">₴25,000</span>
-                </div>
-                <div class="order-actions">
-                    <button class="btn-view">Переглянути</button>
-                    <button class="btn-track">Відстежити</button>
-                </div>
-            </div>
 
-            <!-- Order 3 -->
-            <div class="order-card">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3 class="order-number">#ORD-2024-003</h3>
-                        <span class="order-date">10 березня 2024</span>
+                    <div class="order-customer">
+                        <div class="customer-avatar">
+                            <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text={% if order.buyer %}{{ order.buyer.username|slice:':2'|upper }}{% else %}--{% endif %}" alt="Customer">
+                        </div>
+                        <div class="customer-info">
+                            <span class="customer-name">
+                                {% if order.buyer %}
+                                    {{ order.buyer.username }}
+                                {% else %}
+                                    Покупця не вказано
+                                {% endif %}
+                            </span>
+                            <span class="customer-company">
+                                Адреса доставки: {{ order.delivery_address }}
+                            </span>
+                        </div>
                     </div>
-                    <div class="order-status processing">В обробці</div>
-                </div>
-                <div class="order-customer">
-                    <div class="customer-avatar">
-                        <img src="https://via.placeholder.com/40x40/8b5cf6/ffffff?text=СК" alt="Customer">
+
+                    <div class="order-items">
+                        {% for item in order.items.all %}
+                            <div class="order-item">
+                                <span class="item-name">{{ item.product.name }}</span>
+                                <span class="item-quantity">x{{ item.quantity }}</span>
+                                <span class="item-price">₴{{ item.price }}</span>
+                            </div>
+                        {% empty %}
+                            <div class="order-item">
+                                <span class="item-name">Товари відсутні</span>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="customer-info">
-                        <span class="customer-name">Сергій Коваленко</span>
-                        <span class="customer-company">ФОП Коваленко С.В.</span>
+
+                    <div class="order-total">
+                        <span class="total-label">Загальна сума:</span>
+                        <span class="total-amount">₴{{ order.total_price }}</span>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn-view">Переглянути</button>
+
+                        {% if order.status == "delivered" %}
+                            <button class="btn-reorder">Повторити</button>
+                        {% elif order.status == "in_transit" %}
+                            <button class="btn-track">Відстежити</button>
+                        {% elif order.status == "created" or order.status == "confirmed" %}
+                            <button class="btn-process">Обробити</button>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="order-items">
-                    <div class="order-item">
-                        <span class="item-name">Механічна клавіатура Keychron</span>
-                        <span class="item-quantity">x1</span>
-                        <span class="item-price">₴3,200</span>
-                    </div>
-                    <div class="order-item">
-                        <span class="item-name">Бездротова миша Logitech</span>
-                        <span class="item-quantity">x1</span>
-                        <span class="item-price">₴2,800</span>
+            {% empty %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3 class="order-number">Замовлень поки немає</h3>
+                        </div>
                     </div>
                 </div>
-                <div class="order-total">
-                    <span class="total-label">Загальна сума:</span>
-                    <span class="total-amount">₴6,000</span>
-                </div>
-                <div class="order-actions">
-                    <button class="btn-view">Переглянути</button>
-                    <button class="btn-process">Обробити</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </main>
 </div>
+<script src="{% static 'sellers/js/order.js' %}"></script>
 {% endblock %}
