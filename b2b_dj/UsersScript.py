@@ -9,18 +9,16 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'b2b_dj.settings')
 django.setup()
 
 from users.models import User
-from orders.models import Order, OrderItem
+from orders.models import Order
 from products.models import Product
 from deliveries.models import Delivery
+from carts.models import CartItem  # Переконайся, що шлях до моделі правильний
 
 fake = Faker()
 
-# -----------------------
-# 1. USERS
-# -----------------------
-
+# 1. СТВОРЕННЯ КОРИСТУВАЧІВ
+User.objects.all().delete() # Очистка перед заповненням
 users = []
-
 for _ in range(10):
     user = User.objects.create(
         username=fake.user_name(),
@@ -35,108 +33,85 @@ for _ in range(10):
     user.save()
     users.append(user)
 
-print("✅ Users created")
-
 sellers = [u for u in users if u.is_seller] or users
 buyers = [u for u in users if u.is_buyer] or users
 carriers = [u for u in users if u.is_carrier] or users
+print("✅ Users created")
 
-# -----------------------
-# 2. PRODUCTS
-# -----------------------
-
+# 2. СТВОРЕННЯ ТОВАРІВ
+Product.objects.all().delete()
 products = []
-
-for _ in range(10):
+for _ in range(15):
     product = Product.objects.create(
         seller=random.choice(sellers),
-        name=fake.word(),
-
+        name=fake.word().capitalize(),
         category=random.choice([c[0] for c in Product.CATEGORY_CHOICES]),
-        price=Decimal(random.randint(10, 500)),
-
+        price=Decimal(random.randint(50, 2000)),
         origin_location=fake.city(),
-        origin_storage=fake.company(),
-
-        quantity=random.randint(1, 50),
-        stock=random.choice([c[0] for c in Product.STOCK_CHOISES]),
-
-        weight=round(random.uniform(0.5, 20), 2),
-        volume=round(random.uniform(0.01, 2), 2),
-
-        is_perishable=random.choice([True, False]),
-        is_fragile=random.choice([True, False]),
-        is_animal_origin=random.choice([True, False]),
-        is_hazardous=random.choice([True, False]),
-
+        quantity=random.randint(10, 100),
+        weight=round(random.uniform(0.1, 10.0), 2),
+        volume=round(random.uniform(0.01, 0.5), 2),
         temperature_regime=random.choice([c[0] for c in Product.TEMPERATURE_CHOICES]),
-
-        description=fake.text(max_nb_chars=100),
     )
     products.append(product)
-
 print("✅ Products created")
 
-# -----------------------
-# 3. DELIVERIES
-# -----------------------
-
+# 3. СТВОРЕННЯ ДОСТАВОК
+Delivery.objects.all().delete()
 deliveries = []
-
-for _ in range(10):
+for _ in range(5):
     delivery = Delivery.objects.create(
         carrier=random.choice(carriers),
-        vehicle_info=fake.word(),
-
+        vehicle_info=f"{fake.company()} Truck",
         start_location=fake.city(),
         end_location=fake.city(),
-
         status=random.choice(['planned', 'in_progress', 'completed']),
     )
     deliveries.append(delivery)
-
 print("✅ Deliveries created")
 
-# -----------------------
-# 4. ORDERS + ORDER ITEMS
-# -----------------------
+# 4. СТВОРЕННЯ ЗАМОВЛЕНЬ ТА КАРТ-АЙТЕМІВ
+Order.objects.all().delete()
+CartItem.objects.all().delete()
 
-for _ in range(10):
-    seller = random.choice(sellers)
-    buyer = random.choice(buyers)
-    delivery = random.choice(deliveries)
+for _ in range(12):
+    current_buyer = random.choice(buyers)
+    
+    # Вирішуємо: це буде активний кошик чи вже замовлення?
+    is_ordered = random.choice([True, True, False]) # 2/3 шансу, що це замовлення
 
-    order = Order.objects.create(
-        seller=seller,
-        buyer=buyer,
-
-        pickup_address=fake.address(),
-        delivery_address=fake.address(),
-
-        delivery=delivery,
-
-        status=random.choice([
-            'created', 'confirmed', 'assigned',
-            'picked_up', 'in_transit', 'delivered'
-        ]),
-
-        # нові поля
-        time_started=timezone.now() if random.choice([True, False]) else None,
-        time_finished=timezone.now() if random.choice([True, False]) else None,
-        notes=fake.text(max_nb_chars=50),
-    )
-
-    # 🔥 створюємо OrderItem замість просто M2M
-    selected_products = random.sample(products, random.randint(1, 3))
-
-    for product in selected_products:
-        OrderItem.objects.create(
-            order=order,
-            product=product,
-            quantity=random.randint(1, 5),
-            price=product.price
+    if is_ordered:
+        # Створюємо Order (Заголовок)
+        order = Order.objects.create(
+            seller=random.choice(sellers),
+            buyer=current_buyer,
+            pickup_address=fake.address(),
+            delivery_address=fake.address(),
+            delivery=random.choice(deliveries),
+            status=random.choice(['created', 'confirmed', 'delivered']),
+            time_started=timezone.now() if random.random() > 0.5 else None,
+            notes=fake.sentence()
+        )
+        
+        # Створюємо CartItem, прив'язаний до замовлення
+        selected_products = random.sample(products, random.randint(1, 4))
+        for prod in selected_products:
+            CartItem.objects.create(
+                buyer=current_buyer,
+                order=order, # ПРИВ'ЯЗКА ТУТ
+                product=prod,
+                quantity=random.randint(1, 5),
+                price=prod.price # Фіксуємо ціну
+            )
+    else:
+        # Створюємо просто товар у кошику (без Order)
+        CartItem.objects.create(
+            buyer=current_buyer,
+            order=None, # ЗАМОВЛЕННЯ НЕМАЄ
+            product=random.choice(products),
+            quantity=random.randint(1, 3),
+            price=random.choice(products).price
         )
 
-print("✅ Orders + OrderItems created")
-
-print("🎉 ALL DATA GENERATED SUCCESSFULLY")
+print("✅ Data generated: Orders and CartItems (both in-cart and in-order)")
+print("🎉 SUCCESS: База заповнена за твоєю схемою (CartItem замість OrderItem)")
