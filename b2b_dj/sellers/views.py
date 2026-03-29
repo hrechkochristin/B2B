@@ -10,7 +10,29 @@ def main(request):
     return render(request, "sellers/main.html")
 
 def seller_new_offers(request):
-    return render(request, "sellers/seller_new_offers.html")
+    username = request.session.get("username")
+
+    if not username:
+        return redirect("main")
+
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return redirect("main")
+
+    orders = (
+        Order.objects
+        .filter(seller=user, status="created")
+        .select_related("buyer", "delivery")
+        .prefetch_related(
+            Prefetch("items", queryset=CartItem.objects.select_related("product"))
+        )
+        .order_by("-created_at")
+    )
+
+    return render(request, "sellers/seller_new_offers.html", {
+        "orders": orders,
+    })
 
 def seller_product(request):
     username = request.session.get("username")
