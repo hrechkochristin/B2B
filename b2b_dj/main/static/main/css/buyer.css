@@ -1,0 +1,180 @@
+/* =========================
+   PRODUCT ACTIONS BUYER
+========================= */
+
+.product-actions_buyer {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Контейнер для степпера та вибору одиниць */
+.product-controls_buyer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Степпер (кнопки +/- та інпут) */
+.stepper_buyer {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.stepper-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #fff;
+    color: #1e293b;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stepper-btn:hover {
+    background: #38bdf8;
+    color: #fff;
+}
+
+.stepper-input {
+    width: 45px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    outline: none;
+    /* Приховуємо стрілочки інпуту number */
+    -moz-appearance: textfield;
+}
+
+.stepper-input::-webkit-outer-spin-button,
+.stepper-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Вибір одиниць (шт/кг) */
+.unit-select_buyer {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #dbe3ec;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    color: #475569;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.unit-select_buyer:focus {
+    border-color: #38bdf8;
+}
+
+/* Кнопка "Додати" */
+.btn-buy_buyer {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+}
+
+.btn-buy_buyer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(56, 189, 248, 0.35);
+}
+
+.btn-buy_buyer:active {
+    transform: translateY(0);
+}
+
+/* Адаптивність для маленьких екранів */
+@media (max-width: 480px) {
+    .product-controls_buyer {
+        flex-direction: row; /* Залишаємо в рядок, щоб було компактно */
+    }
+}
+
+/* =========================
+   FLOATING CART ICON
+========================= */
+
+.floating-cart {
+    position: fixed;
+    bottom: 30px; /* Відступ знизу */
+    right: 30px;  /* Відступ справа */
+    width: 65px;
+    height: 65px;
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+    z-index: 2000; /* Щоб була поверх усіх модалок та елементів */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+/* Ефект при наведенні */
+.floating-cart:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(14, 165, 233, 0.5);
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+}
+
+/* Червоний індикатор кількості товарів */
+.cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #ef4444;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+    .floating-cart {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+    
+    .floating-cart svg {
+        width: 24px;
+        height: 24px;
+    }
+}
