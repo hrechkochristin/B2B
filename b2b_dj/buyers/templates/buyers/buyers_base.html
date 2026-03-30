@@ -1,6 +1,10 @@
 <!-- templates/buyers/buyers_base.html -->
 {% extends "main/main_base.html" %}
+
 {% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/buyer.css' %}">
+{% endblock %}
 
 {% block title %}Buyer{% endblock %}
 {% block header_extra %}
