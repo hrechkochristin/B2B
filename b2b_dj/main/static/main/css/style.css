@@ -87,10 +87,14 @@ a {
     align-items: center;
     gap: 15px;
 }
-
+.cart-icon {
+    flex-shrink: 0;
+}
 .header-right {
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* 👈 ключ */
+    gap: 15px; /* щоб не злипалось */
 }
 
 .page-title {

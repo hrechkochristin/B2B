@@ -22,6 +22,7 @@
             <h1 class="page-title">Dashboard</h1>
         </div>
         <div class="header-right">
+            {% block header_extra %}{% endblock %}
             <div class="user-info">
                 <div class="user-avatar">
                     <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
@@ -29,6 +30,10 @@
                 <span class="user-name">Продавець</span>
             </div>
         </div>
+        <div class="user-info">
+            ...
+        </div>
+</div>
     </header>
     <div class="layout">
         <aside class="layout-sidebar">

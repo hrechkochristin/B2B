@@ -43,8 +43,21 @@
                         <p class="product-description">{{product.description}}</p>
                     </div>
 
-                    <div class="product-actions">
-                        <button class="btn-edit">Додати</button>
+                    <div class="product-actions_buyer">
+                        <div class="product-controls_buyer">
+                            <div class="stepper_buyer">
+                                <button type="button" class="stepper-btn minus">−</button>
+                                <input type="number" class="stepper-input" value="1" min="1">
+                                <button type="button" class="stepper-btn plus">+</button>
+                            </div>
+
+                            <select class="unit-select_buyer">
+                                <option value="pcs">шт</option>
+                                <option value="kg">кг</option>
+                            </select>
+                            </div>
+                        <button class="btn-edit_buyer">Додати</button>
+                        
                     </div>
                 </div>
             {% endfor %}

@@ -90,7 +90,7 @@ a {
 
 .header-right {
     display: flex;
-    align-items: center;
+    align-items: right;
 }
 
 .page-title {
@@ -1633,3 +1633,4 @@ a {
 .modal.is-visible {
   display: block;
 }
+
