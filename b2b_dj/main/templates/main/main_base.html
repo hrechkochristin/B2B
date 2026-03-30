@@ -1,28 +1,28 @@
-<!-- templates/main/main_base.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Мій сайт{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'main/css/main_header.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/buyer.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/seller_product.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/seller.css' %}">
 
 </head>
 <body>
-    <!-- Header Bar -->
     <header class="top-header">
         <div class="header-left">
-            <button class="burger-menu" id="burger-toggle">
+            <button class="burger-menu" id="burger-toggle" type="button">
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
             </button>
             <h1 class="page-title">Dashboard</h1>
         </div>
+
         <div class="header-right">
-            {% block header_extra %}{% endblock %}
             <div class="user-info">
                 <div class="user-avatar">
                     <img src="https://via.placeholder.com/40x40/38bdf8/ffffff?text=S" alt="Seller Avatar">
@@ -30,23 +30,12 @@
                 <span class="user-name">Продавець</span>
             </div>
         </div>
-        <div class="user-info">
-            ...
-        </div>
-</div>
     </header>
-    <div class="layout">
-        <aside class="layout-sidebar">
-            {% block sidebar %}
-            {% endblock %}
-        </aside>
 
-        <main class="layout-content">
-            {% block content %}
-            {% endblock %}
-        </main>
-    </div>
+    {% block content %}
+    {% endblock %}
 
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    {% endblock %}
 </body>
 </html>
