@@ -86,5 +86,5 @@ def cart_view(request):
     if not username: return redirect("main")
     user = User.objects.get(username=username)
     
-    carts = CartItem.objects.filter(buyer=user).select_related("product")
-    return render(request, 'buyers/buyer_cart.html', {"carts": carts})
+    cart_items = CartItem.objects.filter(buyer=user).select_related("product")
+    return render(request, 'buyers/buyer_cart.html', {"cart_items": cart_items})
