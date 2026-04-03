@@ -2,8 +2,6 @@
 {% load static %}
 
 {% block buyer_content %}
-<link rel="stylesheet" href="{% static 'main/css/buyer.css' %}">
-
 <div class="container">
 
     <aside class="sidebar sidebar-always-visible">
@@ -11,10 +9,10 @@
             <h2>Menu</h2>
         </div>
         <ul class="sidebar-menu">
-            <li class="active"><a href="{% url 'buyer_orders'%}">Мої замовлення</a></li>
-            <li><a href="{% url 'buyer_catalog'%}">Каталог</a></li>
-            <li><a href="{% url 'buyer_process'%}">В процесі</a></li>
-            <li><a href="{% url 'buyer_sellers'%}">Продавці</a></li>
+            <li class="active"><a href="{% url 'buyer_orders' %}">Мої замовлення</a></li>
+            <li><a href="{% url 'buyer_catalog' %}">Каталог</a></li>
+            <li><a href="{% url 'buyer_process' %}">В процесі</a></li>
+            <li><a href="{% url 'buyer_sellers' %}">Продавці</a></li>
         </ul>
     </aside>
 
@@ -28,24 +26,24 @@
         <div class="orders-list">
             {% for order in orders %}
                 <div class="order-card">
-                    
+
                     <div class="order-header">
                         <div class="order-info">
                             <h3>#{{ order.id }}</h3>
-                            <span class="order-date">{{ order.created_at }}</span>
+                            <span class="order-date">{{ order.created_at|date:"d.m.Y H:i" }}</span>
                         </div>
-                        <span class="order-status">{{ order.status }}</span>
+                        <span class="order-status {{ order.status }}">
+                            {{ order.get_status_display }}
+                        </span>
                     </div>
 
                     <div class="order-items">
                         {% for item in order.items.all %}
-                        <div class="order-item">
-                            <span class="item-name">{{ item.product.name }}</span>
-                            <span class="item-quantity">x{{ item.quantity }}</span>
-                            <span class="item-price">
-                                {{ item.price|floatformat:2 }} грн
-                            </span>
-                        </div>
+                            <div class="order-item">
+                                <span class="item-name">{{ item.product.name }}</span>
+                                <span class="item-quantity">x{{ item.quantity }}</span>
+                                <span class="item-price">{{ item.price|floatformat:2 }} грн</span>
+                            </div>
                         {% empty %}
                             <p>Немає товарів</p>
                         {% endfor %}
@@ -53,14 +51,48 @@
 
                     <div class="order-total">
                         <span class="total-label">Сума:</span>
-                        <span class="total-amount">
-                            {{ order.total_price }} грн
-                        </span>
+                        <span class="total-amount">{{ order.total_price|floatformat:2 }} грн</span>
                     </div>
 
                     <div class="order-actions">
-                        <button class="btn-view">Деталі</button>
-                        <button class="btn-track">Відстежити</button>
+                        <button
+                            type="button"
+                            class="btn-view js-open-order-modal"
+                            data-order-id="{{ order.id }}"
+                            data-order-status="{{ order.get_status_display }}"
+                            data-order-created="{{ order.created_at|date:'d.m.Y H:i' }}"
+                            data-order-seller="{% if order.seller %}{{ order.seller }}{% else %}—{% endif %}"
+                            data-order-buyer="{% if order.buyer %}{{ order.buyer }}{% else %}—{% endif %}"
+                            data-order-pickup="{{ order.pickup_address }}"
+                            data-order-delivery="{{ order.delivery_address }}"
+                            data-order-delivery-service="{% if order.delivery %}{{ order.delivery }}{% else %}Не призначено{% endif %}"
+                            data-order-started="{% if order.time_started %}{{ order.time_started|date:'d.m.Y H:i' }}{% else %}—{% endif %}"
+                            data-order-finished="{% if order.time_finished %}{{ order.time_finished|date:'d.m.Y H:i' }}{% else %}—{% endif %}"
+                            data-order-notes="{% if order.notes %}{{ order.notes|striptags }}{% else %}Немає{% endif %}"
+                            data-order-total="{{ order.total_price|floatformat:2 }}"
+                            data-order-weight="{{ order.total_weight|floatformat:2 }}"
+                            data-order-volume="{{ order.total_volume|floatformat:2 }}">
+                            Деталі
+                        </button>
+
+                        <button class="btn-track" type="button">Відстежити</button>
+                    </div>
+
+                    <div id="order-items-{{ order.id }}" style="display:none;">
+                        {% for item in order.items.all %}
+                            <div class="modal-order-item-row">
+                                <div class="modal-order-item-main">
+                                    <strong>{{ item.product.name }}</strong>
+                                </div>
+                                <div class="modal-order-item-meta">Кількість: {{ item.quantity }}</div>
+                                <div class="modal-order-item-meta">Ціна: {{ item.price|floatformat:2 }} грн</div>
+                                <div class="modal-order-item-meta">
+                                    Разом: {{ item.quantity }} × {{ item.price|floatformat:2 }} грн
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="modal-order-empty">Немає товарів</div>
+                        {% endfor %}
                     </div>
 
                 </div>
@@ -69,4 +101,173 @@
 
     </main>
 </div>
+
+<div class="modal" id="orderDetailsModal">
+    <div class="modal-content order-details-modal">
+        <button type="button" class="close-button" id="closeOrderModal">&times;</button>
+
+        <h2>Деталі замовлення</h2>
+
+        <div class="order-modal-body">
+            <div class="order-modal-grid">
+                <div class="order-modal-box">
+                    <h3>Основне</h3>
+
+                    <div class="order-modal-row">
+                        <span>Номер</span>
+                        <strong id="modalOrderId">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Статус</span>
+                        <strong id="modalOrderStatus">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Створено</span>
+                        <strong id="modalOrderCreated">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Продавець</span>
+                        <strong id="modalOrderSeller">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Покупець</span>
+                        <strong id="modalOrderBuyer">—</strong>
+                    </div>
+                </div>
+
+                <div class="order-modal-box">
+                    <h3>Маршрут і доставка</h3>
+
+                    <div class="order-modal-row">
+                        <span>Адреса забору</span>
+                        <strong id="modalOrderPickup">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Адреса доставки</span>
+                        <strong id="modalOrderDelivery">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Служба доставки</span>
+                        <strong id="modalOrderDeliveryService">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Початок</span>
+                        <strong id="modalOrderStarted">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Завершення</span>
+                        <strong id="modalOrderFinished">—</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-modal-grid order-modal-grid--bottom">
+                <div class="order-modal-box">
+                    <h3>Підсумки</h3>
+
+                    <div class="order-modal-row">
+                        <span>Загальна сума</span>
+                        <strong id="modalOrderTotal">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Загальна вага</span>
+                        <strong id="modalOrderWeight">—</strong>
+                    </div>
+
+                    <div class="order-modal-row">
+                        <span>Загальний об’єм</span>
+                        <strong id="modalOrderVolume">—</strong>
+                    </div>
+                </div>
+
+                <div class="order-modal-box">
+                    <h3>Примітки</h3>
+                    <p class="order-modal-notes" id="modalOrderNotes">—</p>
+                </div>
+            </div>
+
+            <div class="order-modal-box">
+                <h3>Товари в замовленні</h3>
+                <div id="modalOrderItems"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('orderDetailsModal');
+    const closeBtn = document.getElementById('closeOrderModal');
+    const openButtons = document.querySelectorAll('.js-open-order-modal');
+
+    const modalOrderId = document.getElementById('modalOrderId');
+    const modalOrderStatus = document.getElementById('modalOrderStatus');
+    const modalOrderCreated = document.getElementById('modalOrderCreated');
+    const modalOrderSeller = document.getElementById('modalOrderSeller');
+    const modalOrderBuyer = document.getElementById('modalOrderBuyer');
+    const modalOrderPickup = document.getElementById('modalOrderPickup');
+    const modalOrderDelivery = document.getElementById('modalOrderDelivery');
+    const modalOrderDeliveryService = document.getElementById('modalOrderDeliveryService');
+    const modalOrderStarted = document.getElementById('modalOrderStarted');
+    const modalOrderFinished = document.getElementById('modalOrderFinished');
+    const modalOrderTotal = document.getElementById('modalOrderTotal');
+    const modalOrderWeight = document.getElementById('modalOrderWeight');
+    const modalOrderVolume = document.getElementById('modalOrderVolume');
+    const modalOrderNotes = document.getElementById('modalOrderNotes');
+    const modalOrderItems = document.getElementById('modalOrderItems');
+
+    openButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = this.dataset.orderId;
+
+            modalOrderId.textContent = '#' + this.dataset.orderId;
+            modalOrderStatus.textContent = this.dataset.orderStatus;
+            modalOrderCreated.textContent = this.dataset.orderCreated;
+            modalOrderSeller.textContent = this.dataset.orderSeller;
+            modalOrderBuyer.textContent = this.dataset.orderBuyer;
+            modalOrderPickup.textContent = this.dataset.orderPickup;
+            modalOrderDelivery.textContent = this.dataset.orderDelivery;
+            modalOrderDeliveryService.textContent = this.dataset.orderDeliveryService;
+            modalOrderStarted.textContent = this.dataset.orderStarted;
+            modalOrderFinished.textContent = this.dataset.orderFinished;
+            modalOrderTotal.textContent = this.dataset.orderTotal + ' грн';
+            modalOrderWeight.textContent = this.dataset.orderWeight;
+            modalOrderVolume.textContent = this.dataset.orderVolume;
+            modalOrderNotes.textContent = this.dataset.orderNotes;
+
+            const hiddenItems = document.getElementById('order-items-' + orderId);
+            modalOrderItems.innerHTML = hiddenItems
+                ? hiddenItems.innerHTML
+                : '<div class="modal-order-empty">Немає товарів</div>';
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    window.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+});
+</script>
 {% endblock %}

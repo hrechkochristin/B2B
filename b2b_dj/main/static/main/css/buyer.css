@@ -443,6 +443,187 @@
     background: #0ea5e9;
 }
 /* =========================
+   ORDER DETAILS MODAL
+========================= */
+
+.order-details-modal {
+    width: min(1180px, 96vw);
+    max-width: 1180px;
+    max-height: 88vh;
+    padding: 18px 20px;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-details-modal h2 {
+    margin: 0 0 14px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.order-modal-body {
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.order-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.order-modal-grid--bottom {
+    grid-template-columns: 1fr 1fr;
+}
+
+.order-modal-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 0;
+}
+
+.order-modal-box h3 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.order-modal-row {
+    display: grid;
+    grid-template-columns: 145px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 6px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13px;
+}
+
+.order-modal-row:last-child {
+    border-bottom: none;
+}
+
+.order-modal-row span {
+    color: #64748b;
+}
+
+.order-modal-row strong {
+    color: #1e293b;
+    font-weight: 600;
+    word-break: break-word;
+    text-align: left;
+    max-width: 100%;
+}
+
+.order-modal-notes {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #475569;
+    white-space: pre-line;
+}
+
+/* Товари */
+#modalOrderItems {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal-order-item-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 90px 120px 140px;
+    gap: 10px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.modal-order-item-main {
+    margin: 0;
+    min-width: 0;
+}
+
+.modal-order-item-main strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    overflow-wrap: anywhere;
+}
+
+.modal-order-item-meta {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.modal-order-empty {
+    padding: 14px;
+    border-radius: 10px;
+    background: #fff;
+    color: #64748b;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+/* scrollbar для модалки */
+.order-modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.order-modal-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+.order-modal-body::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 999px;
+}
+
+/* responsive */
+@media (max-width: 1100px) {
+    .order-details-modal {
+        width: min(1000px, 98vw);
+    }
+
+    .modal-order-item-row {
+        grid-template-columns: minmax(0, 1fr) 80px 100px 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-details-modal {
+        width: 96vw;
+        max-height: 92vh;
+        padding: 16px;
+    }
+
+    .order-modal-grid,
+    .order-modal-grid--bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .order-modal-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .modal-order-item-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+/* =========================
    RESPONSIVE
 ========================= */
 
