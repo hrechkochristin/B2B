@@ -47,16 +47,27 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const cartCount = document.querySelector('.cart-count');
-                    if (cartCount) {
-                        cartCount.textContent = data.new_count;
-                    }
-                    // Ефект успішного додавання (опціонально)
+                    // Знаходимо ВУСІ елементи з класом .cart-count (і в хедері, і в плаваючій кнопці)
+                    const cartCounts = document.querySelectorAll('.cart-count');
+                    
+                    cartCounts.forEach(el => {
+                        el.textContent = data.new_count;
+                        
+                        // Додамо легкий візуальний ефект "підмигування" при оновленні
+                        el.style.transform = 'scale(1.3)';
+                        setTimeout(() => {
+                            el.style.transform = 'scale(1)';
+                        }, 200);
+                    });
+
+                    // Ефект кнопки
                     this.innerText = 'Додано!';
+                    const originalBg = this.style.backgroundColor;
                     this.style.backgroundColor = '#28a745';
+                    
                     setTimeout(() => {
                         this.innerText = 'Додати';
-                        this.style.backgroundColor = '';
+                        this.style.backgroundColor = originalBg;
                     }, 2000);
                 } else {
                     alert('Помилка: ' + (data.error || 'невідома помилка'));

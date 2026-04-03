@@ -486,3 +486,91 @@
         justify-content: stretch;
     }
 }
+
+/* =========================
+   FLOATING CART WITH PULSE
+   ========================= */
+/* =========================
+   BLURRED BLUE FLOATING CART
+   ========================= */
+
+.floating-cart {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 66px;              /* Трохи збільшили розмір для кращого ефекту */
+    height: 66px;
+    
+    /* НАПІВПРОЗОРИЙ СИНІЙ ГРАДІЄНТ */
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.9) 0%, rgba(2, 132, 199, 0.85) 100%);
+    
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* РОЗМИТА СИНЯ ТІНЬ (ЕФЕКТ СВІТІННЯ) */
+    box-shadow: 0 12px 35px rgba(14, 165, 233, 0.5); /* Великий радіус розмиття */
+    
+    z-index: 9999;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* ЕФЕКТ МАТОВОГО СКЛА (РОЗМИВАЄ КОНТЕНТ ПІД КРУГОМ) */
+    backdrop-filter: blur(6px); /* Додає м'яке розмиття фону */
+    -webkit-backdrop-filter: blur(6px); /* Для підтримки Safari */
+    
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Тонка світла обводка для чіткості */
+}
+
+.floating-cart:hover {
+    transform: translateY(-6px) scale(1.03); /* Посилений ефект при наведенні */
+    background: linear-gradient(135deg, rgba(14, 165, 233, 1) 0%, rgba(2, 132, 199, 0.95) 100%);
+    box-shadow: 0 16px 45px rgba(14, 165, 233, 0.65); /* Тінь стає яскравішою */
+}
+
+/* Іконка SVG залишається білою та чіткою */
+.floating-cart svg {
+    stroke: #ffffff;
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); /* Легка тінь для іконки */
+}
+
+/* Налаштування для червоного індикатора (м'яка пульсація без масштабування) */
+.floating-cart .cart-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: sans-serif;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 4px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    line-height: 1;
+    
+    /* М'яка пульсація тіні */
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
+    animation: pulse-soft 2s infinite;
+}
+
+@keyframes pulse-soft {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
