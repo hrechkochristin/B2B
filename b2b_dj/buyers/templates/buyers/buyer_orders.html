@@ -75,7 +75,14 @@
                             Деталі
                         </button>
 
-                        <button class="btn-track" type="button">Відстежити</button>
+                        <button
+                            class="btn-track js-open-track-modal"
+                            type="button"
+                            data-order-id="{{ order.id }}"
+                            data-start-location="{% if order.delivery and order.delivery.start_location %}{{ order.delivery.start_location }}{% else %}{{ order.pickup_address }}{% endif %}"
+                            data-end-location="{% if order.delivery and order.delivery.end_location %}{{ order.delivery.end_location }}{% else %}{{ order.delivery_address }}{% endif %}">
+                            Відстежити
+                        </button>
                     </div>
 
                     <div id="order-items-{{ order.id }}" style="display:none;">
@@ -201,10 +208,158 @@
             </div>
         </div>
     </div>
+</div><link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<div class="track-modal" id="trackModal">
+    <div class="track-modal__overlay" id="trackModalOverlay"></div>
+
+    <div class="track-modal__content">
+        <button class="track-modal__close" id="trackModalClose" type="button">×</button>
+
+        <div class="track-modal__header">
+            <h3>Відстеження доставки</h3>
+            <p id="trackModalRouteText">Маршрут доставки</p>
+        </div>
+
+        <div class="track-modal__body">
+            <div class="track-modal__map" id="trackMap"></div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("trackModal");
+    const overlay = document.getElementById("trackModalOverlay");
+    const closeBtn = document.getElementById("trackModalClose");
+    const routeText = document.getElementById("trackModalRouteText");
+    const openButtons = document.querySelectorAll(".js-open-track-modal");
+
+    let map = null;
+    let markerStart = null;
+    let markerEnd = null;
+
+    function openModal() {
+        modal.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        modal.classList.remove("is-open");
+        document.body.style.overflow = "";
+
+        if (map) {
+            map.remove();
+            map = null;
+            markerStart = null;
+            markerEnd = null;
+        }
+    }
+
+    async function geocodeAddress(query) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`;
+
+        const response = await fetch(url, {
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Не вдалося отримати координати");
+        }
+
+        const data = await response.json();
+
+        if (!data.length) {
+            throw new Error("Адресу не знайдено");
+        }
+
+        return {
+            lat: parseFloat(data[0].lat),
+            lng: parseFloat(data[0].lon),
+            displayName: data[0].display_name
+        };
+    }
+
+    async function showMap(startLocation, endLocation) {
+        const mapContainer = document.getElementById("trackMap");
+        mapContainer.innerHTML = "";
+
+        map = L.map("trackMap");
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap"
+        }).addTo(map);
+
+        try {
+            const startPoint = await geocodeAddress(startLocation);
+
+            markerStart = L.marker([startPoint.lat, startPoint.lng])
+                .addTo(map)
+                .bindPopup(`Старт: ${startLocation}`);
+
+            if (endLocation && endLocation.trim()) {
+                try {
+                    const endPoint = await geocodeAddress(endLocation);
+
+                    markerEnd = L.marker([endPoint.lat, endPoint.lng])
+                        .addTo(map)
+                        .bindPopup(`Фініш: ${endLocation}`);
+
+                    const bounds = L.latLngBounds([
+                        [startPoint.lat, startPoint.lng],
+                        [endPoint.lat, endPoint.lng]
+                    ]);
+
+                    map.fitBounds(bounds, { padding: [40, 40] });
+
+                    L.polyline([
+                        [startPoint.lat, startPoint.lng],
+                        [endPoint.lat, endPoint.lng]
+                    ]).addTo(map);
+                } catch (endError) {
+                    map.setView([startPoint.lat, startPoint.lng], 13);
+                }
+            } else {
+                map.setView([startPoint.lat, startPoint.lng], 13);
+            }
+
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 200);
+        } catch (error) {
+            mapContainer.innerHTML = `
+                <div style="padding:24px; color:#b91c1c;">
+                    Не вдалося показати карту: ${error.message}
+                </div>
+            `;
+        }
+    }
+
+    openButtons.forEach((btn) => {
+        btn.addEventListener("click", async function () {
+            const startLocation = btn.dataset.startLocation || "";
+            const endLocation = btn.dataset.endLocation || "";
+
+            routeText.textContent = `${startLocation} → ${endLocation || "точка не вказана"}`;
+
+            openModal();
+            await showMap(startLocation, endLocation);
+        });
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", closeModal);
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('orderDetailsModal');
