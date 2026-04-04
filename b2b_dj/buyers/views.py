@@ -72,8 +72,6 @@ def buyer_orders(request):
     orders = Order.objects.filter(buyer=user).prefetch_related('items__product')
     return render(request, "buyers/buyer_orders.html", {"orders": orders})
 
-def buyer_process(request):
-    return render(request, "buyers/buyer_process.html")
 
 def buyer_sellers(request):
     sellers = User.objects.filter(is_seller=True)
