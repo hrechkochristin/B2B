@@ -8,7 +8,8 @@
 {% block content %}
     {% block buyer_content %}{% endblock %}
 
-    <a href="{% url 'buyer_cart' %}" class="floating-cart">
+    <!-- Плаваючий кошик -->
+    <a href="javascript:void(0);" class="floating-cart" id="floatingCartBtn">
         <svg xmlns="http://www.w3.org/2000/svg" 
              width="28" height="28" 
              viewBox="0 0 24 24" 
@@ -23,4 +24,131 @@
         </svg>
         <span class="cart-count">{{ carts.count|default:"3" }}</span>
     </a>
+
+    <!-- Модалка кошика -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="cart-shell">
+                <div class="cart-header">
+                    <div>
+                        <p class="cart-badge">Покупець / Кошик</p>
+                        <h1 class="cart-title">Мій кошик</h1>
+                        <p class="cart-subtitle">
+                            Переглянь додані товари, зміни кількість або перейди до оформлення замовлення.
+                        </p>
+                    </div>
+                </div>
+
+                {% if carts %}
+                    <div class="cart-layout">
+                        <section class="cart-items-card">
+                            <div class="cart-card-head">
+                                <h2>Товари в кошику</h2>
+                                <span class="cart-count-label">
+                                    {{ carts|length }} шт.
+                                </span>
+                            </div>
+
+                            <div class="cart-items-list">
+                                {% for item in carts %}
+                                    <article class="cart-item">
+                                        <div class="cart-item__media">
+                                            {% if item.product.image %}
+                                                <img src="https://picsum.photos/300/200" alt="{{ item.product.name }}">
+                                            {% else %}
+                                                <div class="cart-item__placeholder">Фото</div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="cart-item__main">
+                                            <div class="cart-item__top">
+                                                <div>
+                                                    <h3 class="cart-item__title">{{ item.product.name }}</h3>
+                                                    {% if item.product.category %}
+                                                        <p class="cart-item__meta">
+                                                            Категорія: {{ item.product.category }}
+                                                        </p>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="cart-item__price">
+                                                    ${{ item.product.price }}
+                                                </div>
+                                            </div>
+
+                                            <div class="cart-item__bottom">
+                                                <div class="cart-item__qty">
+                                                    <span class="cart-item__label">Кількість:</span>
+                                                    <span class="cart-item__value">{{ item.quantity }}</span>
+                                                </div>
+
+                                                <div class="cart-item__sum">
+                                                    <span class="cart-item__label">Сума:</span>
+                                                    <strong>${{ item.price }}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="cart-item__actions">
+                                            <a href="#" class="btn btn-danger-outline">Видалити</a>
+                                        </div>
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </section>
+
+                        <aside class="cart-summary-card">
+                            <div class="cart-card-head">
+                                <h2>Підсумок</h2>
+                            </div>
+
+                            <div class="summary-list">
+                                <div class="summary-row">
+                                    <span>Кількість позицій</span>
+                                    <strong>{{ carts|length }}</strong>
+                                </div>
+
+                                <div class="summary-row">
+                                    <span>Загальна сума</span>
+                                    <strong>${{ cart_total }}</strong>
+                                </div>
+                            </div>
+
+                            <div class="cart-summary-actions">
+                                <a href="#" class="btn btn-primary-wide">Оформити замовлення</a>
+                                <a href="#" class="btn btn-light-wide">Продовжити покупки</a>
+                            </div>
+                        </aside>
+                    </div>
+                {% else %}
+                    <section class="cart-empty-card">
+                        <div class="cart-empty-icon">🛒</div>
+                        <h2>Кошик порожній</h2>
+                        <p>У тебе ще немає доданих товарів. Перейди до каталогу та вибери потрібні позиції.</p>
+                        <a href="#" class="btn btn-primary-wide">Перейти до каталогу</a>
+                    </section>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- JS для відкриття/закриття модалки -->
+    <script>
+        const cartModal = document.getElementById("cartModal");
+        const floatingCartBtn = document.getElementById("floatingCartBtn");
+        const closeModal = cartModal.querySelector(".modal-close");
+
+        floatingCartBtn.onclick = () => cartModal.style.display = "block";
+        closeModal.onclick = () => cartModal.style.display = "none";
+        window.onclick = (e) => {
+            if (e.target == cartModal) cartModal.style.display = "none";
+        };
+    </script>
+
+    <!-- CSS базова модалка -->
+    <style>
+        .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.5);}
+        .modal-content { background: #fff; margin: 5% auto; padding: 20px; width: 90%; max-width: 1000px; border-radius: 8px; position: relative; }
+        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; }
+    </style>
 {% endblock %}

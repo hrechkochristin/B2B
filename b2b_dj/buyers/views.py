@@ -77,14 +77,6 @@ def buyer_sellers(request):
     sellers = User.objects.filter(is_seller=True)
     return render(request, "buyers/buyer_sellers.html", {"sellers": sellers})
 
-def cart_view(request):
-    username = request.session.get("username")
-    if not username: return redirect("main")
-    user = User.objects.get(username=username)
-    
-    cart_items = CartItem.objects.filter(buyer=user).select_related("product")
-    return render(request, 'buyers/buyer_cart.html', {"cart_items": cart_items})
-
 
 def add_to_cart(request):
     if request.method != "POST":
