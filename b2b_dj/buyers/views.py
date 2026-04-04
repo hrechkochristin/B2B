@@ -89,26 +89,35 @@ def cart_view(request):
 
 
 def add_to_cart(request):
-    if request.method == "POST" and request.user.is_authenticated:
-        product_id = request.POST.get("product_id")
-        quantity = int(request.POST.get("quantity", 1))
-        
-        product = get_object_or_404(Product, id=product_id)
-        buyer = request.user
+    if request.method != "POST":
+        return redirect("buyer_catalog")
 
-        # Перевіряємо, чи товар вже в кошику (order=None)
-        cart_item, created = CartItem.objects.get_or_create(
-            buyer=buyer,
-            product=product,
-            order=None,  # це значить "ще не замовлено"
-            defaults={
-                'quantity': quantity,
-                'price': product.price,  # беремо поточну ціну продукту
-            }
-        )
+    username = request.session.get("username")
+    if not username:
+        return redirect("main")
 
-        if not created:
-            cart_item.quantity += quantity
-            cart_item.save()
+    try:
+        buyer = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return redirect("main")
 
-    return redirect('buyer_catalog')
+    product_id = request.POST.get("product_id")
+    quantity = int(request.POST.get("quantity", 1))
+
+    product = get_object_or_404(Product, id=product_id)
+
+    cart_item, created = CartItem.objects.get_or_create(
+        buyer=buyer,
+        product=product,
+        order=None,
+        defaults={
+            "quantity": quantity,
+            "price": product.price,
+        }
+    )
+
+    if not created:
+        cart_item.quantity += quantity
+        cart_item.save()
+
+    return redirect("buyer_catalog")
