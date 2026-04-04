@@ -1,98 +1,65 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Логіка степперів (Плюс/Мінус)
-    const stepperContainers = document.querySelectorAll('.stepper_buyer');
-    stepperContainers.forEach(container => {
-        const minusBtn = container.querySelector('.minus');
-        const plusBtn = container.querySelector('.plus');
-        const input = container.querySelector('.stepper-input');
+// buyers.js
 
-        minusBtn.addEventListener('click', () => {
-            let value = parseInt(input.value);
-            if (value > parseInt(input.min)) {
-                input.value = value - 1;
-            }
-        });
+// =========================
+// 1. Підключення Supabase
+// =========================
+const supabaseUrl = "https://YOUR_PROJECT.supabase.co";
+const supabaseKey = "PUBLIC_ANON_KEY"; // заміни на свій
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        plusBtn.addEventListener('click', () => {
-            let value = parseInt(input.value);
-            input.value = value + 1;
-        });
+// =========================
+// 2. Stepper + / -
+// =========================
+document.querySelectorAll('.stepper_buyer').forEach(stepper => {
+    const minusBtn = stepper.querySelector('.minus');
+    const plusBtn = stepper.querySelector('.plus');
+    const input = stepper.querySelector('.stepper-input');
+
+    minusBtn.addEventListener('click', () => {
+        let val = parseInt(input.value);
+        if (val > parseInt(input.min)) input.value = val - 1;
     });
 
-    // 2. Логіка додавання в кошик через AJAX
-    document.querySelectorAll('.btn-buy_buyer').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const card = this.closest('.product-card');
-            const productId = card.getAttribute('data-product-id');
-            const quantity = card.querySelector('.stepper-input').value;
-            // Отримуємо ціну з data-атрибута або очищуємо текст
-            const priceElement = card.querySelector('.product-price');
-            const price = priceElement.getAttribute('data-raw-price') || priceElement.innerText.replace(/[^\d.]/g, '');
-
-            const formData = new FormData();
-            formData.append('productId', productId);
-            formData.append('quantity', quantity);
-            formData.append('price', price);
-
-            fetch(window.location.href, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Знаходимо ВУСІ елементи з класом .cart-count (і в хедері, і в плаваючій кнопці)
-                    const cartCounts = document.querySelectorAll('.cart-count');
-                    
-                    cartCounts.forEach(el => {
-                        el.textContent = data.new_count;
-                        
-                        // Додамо легкий візуальний ефект "підмигування" при оновленні
-                        el.style.transform = 'scale(1.3)';
-                        setTimeout(() => {
-                            el.style.transform = 'scale(1)';
-                        }, 200);
-                    });
-
-                    // Ефект кнопки
-                    this.innerText = 'Додано!';
-                    const originalBg = this.style.backgroundColor;
-                    this.style.backgroundColor = '#28a745';
-                    
-                    setTimeout(() => {
-                        this.innerText = 'Додати';
-                        this.style.backgroundColor = originalBg;
-                    }, 2000);
-                } else {
-                    alert('Помилка: ' + (data.error || 'невідома помилка'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Сталася помилка при відправці запиту');
-            });
-        });
+    plusBtn.addEventListener('click', () => {
+        input.value = parseInt(input.value) + 1;
     });
 });
 
-// Функція для отримання CSRF токена
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+// =========================
+// 3. Додавання в кошик
+// =========================
+document.querySelectorAll('.product-card').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const product_id = form.querySelector('input[name="product_id"]').value;
+        const quantity = parseInt(form.querySelector('input[name="quantity"]').value);
+        const unit = form.querySelector('select[name="unit"]').value;
+        const user_id = 1; // заміни на реальний ID користувача або з auth
+
+        try {
+            const { data, error } = await supabase
+                .from('cart_items')
+                .insert([
+                    {
+                        product_id: product_id,
+                        user_id: user_id,
+                        quantity: quantity,
+                        unit: unit
+                    }
+                ]);
+
+            if (error) {
+                console.error('Помилка при додаванні в кошик:', error);
+                alert('Помилка при додаванні товару!');
+            } else {
+                console.log('Товар додано в кошик:', data);
+                alert('Товар додано в кошик!');
+                // тут можна додати оновлення лічильника у шапці
             }
+        } catch (err) {
+            console.error(err);
+            alert('Помилка мережі!');
         }
-    }
-    return cookieValue;
-}
+    });
+});

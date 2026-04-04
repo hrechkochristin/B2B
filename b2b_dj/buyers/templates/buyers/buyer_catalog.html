@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block buyer_content %}
+
 <link rel="stylesheet" href="{% static 'main/css/buyer.css' %}">
 
 <div class="container">
@@ -17,54 +18,78 @@
         </ul>
     </aside>
 
-    <main class="main_page">
-        <div class="page-header">
-            <h1>Каталог товарів</h1>
-            <p>Обирайте продукцію</p>
-        </div>
 
-        <div class="products-grid">
-            {% for product in products %}
-                <div class="product-card" data-product-id="{{ product.id }}">
-                    <div class="product-image">
-                        <img src="https://picsum.photos/300/200" alt="{{ product.name }}">
-                        <div class="product-status in-stock">{{ product.stock }}</div>
-                    </div>
+<main class="main_page">
+    <div class="page-header">
+        <h1>Каталог товарів</h1>
+        <p>Обирайте продукцію</p>
+    </div>
 
-                    <div class="product-info">
-                        <h3 class="product-name">{{ product.name }}</h3>
-                        <p class="product-category">{{ product.category }}</p>
+    <div class="products-grid">
+        {% for product in products %}
+            
+            <form method="POST" action="{% url 'add_to_cart' %}" class="product-card">
+                {% csrf_token %}
+                
+                <!-- hidden -->
+                <input type="hidden" name="product_id" value="{{ product.id }}">
 
-                        <div class="product-details">
-                            <span class="product-price" data-raw-price="{{ product.price }}">{{ product.price }} грн</span>
-                            <span class="product-stock">{{ product.quantity }} шт</span>
-                        </div>
 
-                        <p class="product-description">{{ product.description }}</p>
-                    </div>
-
-                    <div class="product-actions_buyer">
-                        <div class="product-controls_buyer">
-                            <div class="stepper_buyer">
-                                <button type="button" class="stepper-btn minus">−</button>
-                                <input type="number" class="stepper-input" value="1" min="1">
-                                <button type="button" class="stepper-btn plus">+</button>
-                            </div>
-
-                            <select class="unit-select_buyer">
-                                <option value="pcs">шт</option>
-                                <option value="kg">кг</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn-buy_buyer">Додати</button>
-                    </div>
+                <div class="product-image">
+                    <img src="https://picsum.photos/300/200" alt="{{ product.name }}">
+                    <div class="product-status in-stock">{{ product.stock }}</div>
                 </div>
-            {% endfor %}
-        </div>
 
-        
-    </main>
+                <div class="product-info">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-category">{{ product.category }}</p>
+
+                    <div class="product-details">
+                        <span class="product-price" data-raw-price="{{ product.price }}">
+                            {{ product.price }} грн
+                        </span>
+                        <span class="product-stock">{{ product.quantity }} шт</span>
+                    </div>
+
+                    <p class="product-description">{{ product.description }}</p>
+                </div>
+
+                <div class="product-actions_buyer">
+                    <div class="product-controls_buyer">
+                        <div class="stepper_buyer">
+                            <button type="button" class="stepper-btn minus">−</button>
+
+                            <input 
+                                type="number" 
+                                name="quantity" 
+                                class="stepper-input" 
+                                value="1" 
+                                min="1"
+                            >
+
+                            <button type="button" class="stepper-btn plus">+</button>
+                        </div>
+
+                        <select name="unit" class="unit-select_buyer">
+                            <option value="pcs">шт</option>
+                            <option value="kg">кг</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-buy_buyer">
+                        Додати
+                    </button>
+                </div>
+
+            </form>
+
+        {% endfor %}
+    </div>
+</main>
+
+
 </div>
 
 <script src="{% static 'buyers/js/script.js' %}"></script>
+
 {% endblock %}

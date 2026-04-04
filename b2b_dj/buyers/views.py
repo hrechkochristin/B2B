@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 from users.models import User
 from products.models import Product
@@ -22,40 +22,38 @@ def buyer_catalog(request):
     # 2. Обробка додавання товару (POST)
     if request.method == "POST":
         product_id = request.POST.get("productId")
-        try:
-            quantity = int(request.POST.get("quantity", 1))
-            price = float(request.POST.get("price", 0))
-        except (ValueError, TypeError):
-            quantity = 1
-            price = 0
+        quantity = int(request.POST.get("quantity", 1))
 
         if product_id:
-            # ВИПРАВЛЕННЯ ПОМИЛКИ MultipleObjectsReturned:
-            # Шукаємо всі існуючі записи цього товару в кошику користувача
-            items = CartItem.objects.filter(buyer=user, product_id=product_id)
-            
-            if items.exists():
-                # Якщо є хоча б один — беремо перший і оновлюємо кількість
-                cart_item = items.first()
-                cart_item.quantity += quantity
-                cart_item.save()
-            else:
-                # Якщо немає — створюємо новий
-                CartItem.objects.create(
+            try:
+                product = Product.objects.get(id=product_id)
+                # Беремо ціну з товару в базі, а не з POST (так безпечніше)
+                product_price = product.price 
+
+                # Використовуємо get_or_create для чистоти коду
+                cart_item, created = CartItem.objects.get_or_create(
                     buyer=user,
-                    product_id=product_id,
-                    quantity=quantity,
-                    price=price
+                    product=product,
+                    defaults={'quantity': quantity, 'price': product_price}
                 )
 
-            new_count = CartItem.objects.filter(buyer=user).count()
+                if not created:
+                    cart_item.quantity += quantity
+                    cart_item.save()
 
-            # Повертаємо це число в JavaScript
-            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                # Рахуємо загальну кількість УНІКАЛЬНИХ позицій у кошику
+                new_count = CartItem.objects.filter(buyer=user).count()
+
+                # ПОВЕРТАЄМО ВІДПОВІДЬ ЗАВЖДИ ДЛЯ POST
                 return JsonResponse({
                     "success": True, 
-                    "new_count": new_count  # Це значення JS підставить у .cart-count
+                    "new_count": new_count
                 })
+
+            except Product.DoesNotExist:
+                return JsonResponse({"success": False, "error": "Товар не знайдено"}, status=404)
+            except Exception as e:
+                return JsonResponse({"success": False, "error": str(e)}, status=500)
 
     # 3. Відображення сторінки (GET)
     products = Product.objects.all()
@@ -88,3 +86,29 @@ def cart_view(request):
     
     cart_items = CartItem.objects.filter(buyer=user).select_related("product")
     return render(request, 'buyers/buyer_cart.html', {"cart_items": cart_items})
+
+
+def add_to_cart(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        product_id = request.POST.get("product_id")
+        quantity = int(request.POST.get("quantity", 1))
+        
+        product = get_object_or_404(Product, id=product_id)
+        buyer = request.user
+
+        # Перевіряємо, чи товар вже в кошику (order=None)
+        cart_item, created = CartItem.objects.get_or_create(
+            buyer=buyer,
+            product=product,
+            order=None,  # це значить "ще не замовлено"
+            defaults={
+                'quantity': quantity,
+                'price': product.price,  # беремо поточну ціну продукту
+            }
+        )
+
+        if not created:
+            cart_item.quantity += quantity
+            cart_item.save()
+
+    return redirect('buyer_catalog')
