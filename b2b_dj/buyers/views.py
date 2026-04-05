@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
+from orders.models import Order
 from users.models import User
 from products.models import Product
 from carts.models import CartItem
@@ -70,12 +71,36 @@ def buyer_orders(request):
     
     user = User.objects.get(username=username)
     orders = Order.objects.filter(buyer=user).prefetch_related('items__product')
-    return render(request, "buyers/buyer_orders.html", {"orders": orders})
+    carts = CartItem.objects.filter(buyer=user).select_related("product")
+    return render(request, "buyers/buyer_orders.html", {
+        "orders": orders,
+        "carts": carts,
+        })
 
 
 def buyer_sellers(request):
+    username = request.session.get("username")
+    if not username: return redirect("main")
+    user = User.objects.get(username=username)
+
     sellers = User.objects.filter(is_seller=True)
-    return render(request, "buyers/buyer_sellers.html", {"sellers": sellers})
+    orders = Order.objects.filter(buyer=user).prefetch_related('items__product')
+    carts = CartItem.objects.filter(buyer=user).select_related("product")
+    return render(request, "buyers/buyer_sellers.html", {
+        "sellers": sellers,
+        "orders": orders,
+        "carts": carts
+    })
+
+def main(request):
+    username = request.session.get("username")
+    if not username: return redirect("main")
+    user = User.objects.get(username=username)
+
+    carts = CartItem.objects.filter(buyer=user).select_related("product")
+    return render(request, "buyers/main.html", {
+        "carts": carts
+    })
 
 
 def add_to_cart(request):
@@ -111,3 +136,21 @@ def add_to_cart(request):
         cart_item.save()
 
     return redirect("buyer_catalog")
+
+from django.shortcuts import get_object_or_404, redirect
+
+def remove_from_cart(request, cart_id):
+    if request.method == "POST":
+        username = request.session.get("username")
+        if not username:
+            return redirect("main")
+
+        try:
+            buyer = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return redirect("main")
+        cart_item = get_object_or_404(CartItem, id=cart_id, buyer=buyer)
+        cart_item.delete()
+        
+    # Повертаємо на ту ж сторінку, де був користувач
+    return redirect(request.META.get('HTTP_REFERER', '/'))

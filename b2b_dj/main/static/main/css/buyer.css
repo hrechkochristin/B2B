@@ -16,38 +16,37 @@
     gap: 20px;
 }
 
-.cart-header {
-    background: linear-gradient(135deg, #ffffff 0%, #f7fcff 100%);
-    border: 1px solid #dbeafe;
-    border-radius: 22px;
-    padding: 28px;
-    box-shadow: 0 12px 32px rgba(14, 165, 233, 0.08);
+.cart-header div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* Це контролює проміжок між УСІМА трьома елементами одночасно */
 }
 
 .cart-badge {
-    margin: 0 0 10px;
+    margin: 0; /* Прибираємо нижній марджин */
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #0ea5e9;
+    line-height: 1;
 }
 
 .cart-title {
-    margin: 0;
-    font-size: 34px;
+    margin: 0; /* Важливо: прибираємо стандартні відступи h1 */
+    font-size: 28px;
     font-weight: 800;
     color: #0f172a;
+    line-height: 1.2;
 }
 
 .cart-subtitle {
-    margin: 10px 0 0;
+    margin: 0; /* Прибираємо марджин */
     max-width: 760px;
-    font-size: 15px;
-    line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.4; /* Повертаємо нормальну читабельність (0.5 — це замало) */
     color: #64748b;
 }
-
 .cart-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.8fr) 340px;
@@ -75,6 +74,7 @@
     justify-content: space-between;
     gap: 14px;
     margin-bottom: 18px;
+    flex-shrink: 0;
 }
 
 .cart-card-head h2 {
@@ -278,6 +278,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .btn-primary-wide {
@@ -355,6 +356,7 @@
     justify-content: center;
     border: 2px solid #fff;
 }
+
 /* =========================
    PRODUCT CARD (BUYER)
 ========================= */
@@ -375,8 +377,6 @@
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
 
-/* BUYER ACTIONS */
-
 .product-actions_buyer {
     padding: 0 20px 20px;
     display: flex;
@@ -389,8 +389,6 @@
     gap: 10px;
     align-items: center;
 }
-
-/* STEPPER */
 
 .stepper_buyer {
     display: flex;
@@ -418,15 +416,11 @@
     background: transparent;
 }
 
-/* SELECT */
-
 .unit-select_buyer {
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     padding: 6px;
 }
-
-/* BUTTON */
 
 .btn-buy_buyer {
     background: #38bdf8;
@@ -442,9 +436,11 @@
 .btn-buy_buyer:hover {
     background: #0ea5e9;
 }
+
 /* =========================
    ORDER TRACK MODAL
 ========================= */
+
 .track-modal {
     position: fixed;
     inset: 0;
@@ -503,6 +499,7 @@
     height: 100%;
     min-height: 420px;
 }
+
 /* =========================
    ORDER DETAILS MODAL
 ========================= */
@@ -590,7 +587,6 @@
     white-space: pre-line;
 }
 
-/* Товари */
 #modalOrderItems {
     display: flex;
     flex-direction: column;
@@ -636,7 +632,6 @@
     border: 1px solid #e2e8f0;
 }
 
-/* scrollbar для модалки */
 .order-modal-body::-webkit-scrollbar {
     width: 8px;
 }
@@ -651,7 +646,179 @@
     border-radius: 999px;
 }
 
-/* responsive */
+/* =========================
+   FLOATING CART
+========================= */
+
+.floating-cart {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 66px;
+    height: 66px;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.9) 0%, rgba(2, 132, 199, 0.85) 100%);
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 35px rgba(14, 165, 233, 0.5);
+    z-index: 9999;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.floating-cart:hover {
+    transform: translateY(-6px) scale(1.03);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 1) 0%, rgba(2, 132, 199, 0.95) 100%);
+    box-shadow: 0 16px 45px rgba(14, 165, 233, 0.65);
+}
+
+.floating-cart svg {
+    stroke: #ffffff;
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.floating-cart .cart-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: sans-serif;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 4px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    line-height: 1;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
+    animation: pulse-soft 2s infinite;
+}
+
+@keyframes pulse-soft {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+/* =========================
+   CART MODAL - FIXED SCROLL
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: #fff;
+    margin: 2vh auto;
+    padding: 24px;
+    width: 95%;
+    max-width: 1300px;
+    height: 92vh;
+    border-radius: 22px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.modal-content .cart-shell {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    gap: 20px;
+}
+
+.modal-content .cart-layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    gap: 24px;
+    overflow: hidden;
+    align-items: stretch;
+}
+
+.modal-content .cart-items-card {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-content .cart-items-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 12px;
+    margin-top: 10px;
+}
+
+.modal-content .cart-summary-card {
+    width: 360px;
+    flex-shrink: 0;
+    align-self: stretch;
+    overflow-y: auto;
+}
+
+.modal-content .cart-items-list::-webkit-scrollbar,
+.modal-content .cart-summary-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content .cart-items-list::-webkit-scrollbar-track,
+.modal-content .cart-summary-card::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+.modal-content .cart-items-list::-webkit-scrollbar-thumb,
+.modal-content .cart-summary-card::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 999px;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media (max-width: 1100px) {
     .order-details-modal {
         width: min(1000px, 98vw);
@@ -660,41 +827,32 @@
     .modal-order-item-row {
         grid-template-columns: minmax(0, 1fr) 80px 100px 120px;
     }
-}
 
-@media (max-width: 768px) {
-    .order-details-modal {
-        width: 96vw;
-        max-height: 92vh;
-        padding: 16px;
-    }
-
-    .order-modal-grid,
-    .order-modal-grid--bottom {
-        grid-template-columns: 1fr;
-    }
-
-    .order-modal-row {
-        grid-template-columns: 1fr;
-        gap: 4px;
-    }
-
-    .modal-order-item-row {
-        grid-template-columns: 1fr;
-        gap: 4px;
-    }
-}
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 1100px) {
     .cart-layout {
         grid-template-columns: 1fr;
     }
 
     .cart-summary-card {
         order: -1;
+    }
+
+    .modal-content .cart-layout {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .modal-content .cart-items-card,
+    .modal-content .cart-summary-card {
+        width: 100%;
+    }
+
+    .modal-content .cart-summary-card {
+        align-self: auto;
+        overflow: visible;
+    }
+
+    .modal-content .cart-items-list {
+        max-height: none;
     }
 }
 
@@ -727,92 +885,36 @@
     .cart-item__actions {
         justify-content: stretch;
     }
-}
 
-/* =========================
-   FLOATING CART WITH PULSE
-   ========================= */
-/* =========================
-   BLURRED BLUE FLOATING CART
-   ========================= */
-
-.floating-cart {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 66px;              /* Трохи збільшили розмір для кращого ефекту */
-    height: 66px;
-    
-    /* НАПІВПРОЗОРИЙ СИНІЙ ГРАДІЄНТ */
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.9) 0%, rgba(2, 132, 199, 0.85) 100%);
-    
-    color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* РОЗМИТА СИНЯ ТІНЬ (ЕФЕКТ СВІТІННЯ) */
-    box-shadow: 0 12px 35px rgba(14, 165, 233, 0.5); /* Великий радіус розмиття */
-    
-    z-index: 9999;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* ЕФЕКТ МАТОВОГО СКЛА (РОЗМИВАЄ КОНТЕНТ ПІД КРУГОМ) */
-    backdrop-filter: blur(6px); /* Додає м'яке розмиття фону */
-    -webkit-backdrop-filter: blur(6px); /* Для підтримки Safari */
-    
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Тонка світла обводка для чіткості */
-}
-
-.floating-cart:hover {
-    transform: translateY(-6px) scale(1.03); /* Посилений ефект при наведенні */
-    background: linear-gradient(135deg, rgba(14, 165, 233, 1) 0%, rgba(2, 132, 199, 0.95) 100%);
-    box-shadow: 0 16px 45px rgba(14, 165, 233, 0.65); /* Тінь стає яскравішою */
-}
-
-/* Іконка SVG залишається білою та чіткою */
-.floating-cart svg {
-    stroke: #ffffff;
-    width: 28px;
-    height: 28px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); /* Легка тінь для іконки */
-}
-
-/* Налаштування для червоного індикатора (м'яка пульсація без масштабування) */
-.floating-cart .cart-count {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background: #ef4444;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 600;
-    font-family: sans-serif;
-    min-width: 19px;
-    height: 19px;
-    padding: 0 4px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    line-height: 1;
-    
-    /* М'яка пульсація тіні */
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
-    animation: pulse-soft 2s infinite;
-}
-
-@keyframes pulse-soft {
-    0% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    .order-details-modal {
+        width: 96vw;
+        max-height: 92vh;
+        padding: 16px;
     }
-    70% {
-        box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+
+    .order-modal-grid,
+    .order-modal-grid--bottom {
+        grid-template-columns: 1fr;
     }
-    100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+
+    .order-modal-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .modal-order-item-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .modal-content {
+        width: calc(100vw - 16px);
+        height: calc(100vh - 16px);
+        margin: 8px auto;
+        padding: 16px;
+    }
+
+    .modal-content .cart-layout {
+        gap: 16px;
     }
 }

@@ -42,3 +42,45 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cartModal = document.getElementById("cartModal");
+    const floatingCartBtn = document.getElementById("floatingCartBtn");
+    const closeModalBtn = document.querySelector(".modal-close");
+    const body = document.body;
+
+    // Функція відкриття
+    const openCart = () => {
+        cartModal.style.display = "block";
+        body.classList.add("modal-open"); // Блокуємо скрол фону
+    };
+
+    // Функція закриття
+    const closeCart = () => {
+        cartModal.style.display = "none";
+        body.classList.remove("modal-open"); // Повертаємо скрол фону
+    };
+
+    // Слухачі подій
+    if (floatingCartBtn) {
+        floatingCartBtn.addEventListener("click", openCart);
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", closeCart);
+    }
+
+    // Закриття при кліку поза межами модалки (на темний фон)
+    window.addEventListener("click", (e) => {
+        if (e.target === cartModal) {
+            closeCart();
+        }
+    });
+
+    // Опціонально: закриття клавішею Escape
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && cartModal.style.display === "block") {
+            closeCart();
+        }
+    });
+});
