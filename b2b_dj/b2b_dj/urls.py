@@ -9,6 +9,7 @@ urlpatterns = [
     path("",include("main.urls")),
     path("sellers/", include("sellers.urls")),
     path("buyers/", include("buyers.urls")),
+    path("carriers/", include("carriers.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

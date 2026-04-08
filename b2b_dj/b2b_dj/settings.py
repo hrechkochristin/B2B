@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'main',
     'sellers',
     'buyers',
+    'carriers',
     'users',
     'products',
     'carts',

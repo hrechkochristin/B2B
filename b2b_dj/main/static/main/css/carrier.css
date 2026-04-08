@@ -1,0 +1,418 @@
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.product-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.14);
+}
+
+/* =========================
+   NEW OFFERS / PENDING
+========================= */
+
+.pending-orders {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pending-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pending-items h4,
+.pending-notes h4,
+.warehouse-inventory h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.item-list,
+.inventory-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pending-item,
+.inventory-item {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.pending-notes p {
+    color: #475569;
+    font-style: italic;
+}
+
+/* =========================
+   BUYERS
+========================= */
+
+.buyers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.buyer-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.buyer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.14);
+}
+
+.buyer-avatar {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.buyer-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e2e8f0;
+}
+
+.buyer-status {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.buyer-status.online {
+    background: #10b981;
+}
+
+.buyer-status.offline {
+    background: #6b7280;
+}
+
+.buyer-status.away {
+    background: #f59e0b;
+}
+
+.buyer-info {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.buyer-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.buyer-company {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.buyer-details {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.buyer-orders,
+.buyer-rating {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.buyer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.buyer-phone,
+.buyer-email {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.buyer-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.buyer-actions button {
+    flex: 1;
+}
+
+/* =========================
+   CARRIERS
+========================= */
+
+.carriers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.carrier-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: 0.25s ease;
+}
+
+.carrier-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.14);
+}
+
+.carrier-logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.carrier-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.carrier-type {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.carrier-details,
+.carrier-services,
+.warehouse-features,
+.warehouse-details {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.carrier-rating,
+.carrier-deliveries,
+.warehouse-capacity,
+.warehouse-utilization,
+.feature-tag,
+.service-tag {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+
+.carrier-rating,
+.carrier-deliveries,
+.warehouse-capacity,
+.warehouse-utilization {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.feature-tag,
+.service-tag {
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.carrier-contact {
+    margin-bottom: 18px;
+}
+
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+}
+
+.contact-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.contact-value {
+    font-size: 12px;
+    color: #1e293b;
+    font-weight: 600;
+    text-align: right;
+}
+
+/* =========================
+   STORAGE
+========================= */
+
+.storage-overview {
+    margin-bottom: 28px;
+}
+
+.overview-card,
+.warehouse-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.overview-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 18px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 18px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 26px;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.warehouses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+.warehouse-card {
+    transition: 0.25s ease;
+}
+
+.warehouse-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.14);
+}
+
+.warehouse-icon img {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+}
+
+.warehouse-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.status-indicator.active {
+    background: #10b981;
+}
+
+.status-indicator.maintenance {
+    background: #f59e0b;
+}
+
+.status-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.warehouse-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.warehouse-address {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 12px;
+}

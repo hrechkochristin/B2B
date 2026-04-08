@@ -1,0 +1,117 @@
+{% extends "carriers/carriers_base.html" %}
+{% load static %}
+
+{% block carrier_content %}
+<div class="container">
+
+    <aside class="sidebar sidebar-always-visible">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'carrier_deliveries'%}">Мої доставки</a></li>
+            <li class="active"><a href="{% url 'carrier_orders'%}">Мої замовлення</a></li>
+            <li><a href="{% url 'carrier_sellers'%}">Продавці</a></li>
+            <li><a href="{% url 'carrier_transport'%}">Транспорт</a></li>
+        </ul>
+    </aside>
+
+
+    <main class="main_page">
+        <div class="page-header">
+            <h1>Замовлення в обробці</h1>
+            <p>Керуйте новими замовленнями та пропозиціями</p>
+        </div>
+
+        <div class="pending-orders">
+            {% for order in orders %}
+                <div class="pending-card">
+                    <div class="pending-header">
+                        <div class="pending-info">
+                            <h3 class="pending-number">#PEN-{{ order.id|stringformat:"04d" }}</h3>
+                            <span class="pending-date">{{ order.created_at|date:"d-m-Y, H:i" }}</span>
+                        </div>
+
+                        <div class="pending-priority high">
+                            {{ order.get_status_display }}
+                        </div>
+                    </div>
+
+                    <div class="pending-customer">
+                        <div class="customer-avatar">
+                            <img src="https://via.placeholder.com/50x50/38bdf8/ffffff?text={% if order.buyer %}{{ order.buyer.username|slice:':2'|upper }}{% else %}--{% endif %}" alt="Customer">
+                        </div>
+
+                        <div class="customer-details">
+                            <h4 class="customer-name">
+                                {% if order.buyer %}
+                                    {{ order.buyer.username }}
+                                {% else %}
+                                    Покупця не вказано
+                                {% endif %}
+                            </h4>
+
+                            <p class="customer-company">
+                                Адреса доставки: {{ order.delivery_address }}
+                            </p>
+
+                            <p class="customer-contact">
+                                Адреса відправлення: {{ order.pickup_address }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pending-items">
+                        <h4>Замовлені товари:</h4>
+
+                        <div class="item-list">
+                            {% for item in order.items.all %}
+                                <div class="pending-item">
+                                    <span class="item-name">{{ item.product.name }}</span>
+                                    <span class="item-quantity">x{{ item.quantity }}</span>
+                                    <span class="item-price">₴{{ item.price }}</span>
+                                </div>
+                            {% empty %}
+                                <div class="pending-item">
+                                    <span class="item-name">Товари відсутні</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="pending-total">
+                        <span class="total-label">Загальна сума:</span>
+                        <span class="total-amount">₴{{ order.total_price }}</span>
+                    </div>
+
+                    <div class="pending-notes">
+                        <h4>Примітки покупця:</h4>
+                        <p>
+                            {% if order.notes %}
+                                {{ order.notes }}
+                            {% else %}
+                                Приміток немає
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="pending-actions">
+                        <button class="btn-approve" type="button">Підтвердити</button>
+                        <button class="btn-reject" type="button">Відхилити</button>
+                        <button class="btn-negotiate" type="button">Обговорити</button>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="pending-card">
+                    <div class="pending-header">
+                        <div class="pending-info">
+                            <h3 class="pending-number">Нових замовлень немає</h3>
+                            <span class="pending-date">Усі заявки опрацьовані</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+{% endblock %}
